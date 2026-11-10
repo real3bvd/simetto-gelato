@@ -1,0 +1,114 @@
+[
+  {
+    "file": "public/assets/flavours/clotted-cream.png",
+    "flavour": "Clotted Cream",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "cb75e57dedf5b6447e3f437be39721b5541594ff3212843c86836c566d3d2ea0"
+  },
+  {
+    "file": "public/assets/flavours/chocolate.png",
+    "flavour": "Chocolate",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "9adb8a013fd7c4b29e1f4b92ce6645420268b10f966b45e8304a214cbf160de5"
+  },
+  {
+    "file": "public/assets/flavours/honey-almond.png",
+    "flavour": "Honey Almond",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "2ccbab6c39f11775431236072a587f53603fef17392dc399065a2fadb4f839cc"
+  },
+  {
+    "file": "public/assets/flavours/pistachio.png",
+    "flavour": "Pistachio",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "7e7114501862eac6c210a6a66c3634356470ad187aeb32bcb172ac904aa9321e"
+  },
+  {
+    "file": "public/assets/flavours/italian-caramel.png",
+    "flavour": "Italian Caramel",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "8592ab35853bf31f30511a63596278e220739cb383357c1cc6f46a88c8945318"
+  },
+  {
+    "file": "public/assets/flavours/lotus-biscuit.png",
+    "flavour": "Lotus Biscuit",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "e02480db5af08c7f9348a32c3e1ff89ec8ba8e5254ece475edf21dee05bdec42"
+  },
+  {
+    "file": "public/assets/flavours/mastic.png",
+    "flavour": "Mastic",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "21ec06482fc897a6e139834171a8a5c0986f030d3179bb7db013ed8867cc91fe"
+  },
+  {
+    "file": "public/assets/flavours/tahini-walnut.png",
+    "flavour": "Tahini & Walnut",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "f0605781d1463937ba1875521bf44d1de593a6fb8bf0f100166624f33ab99099"
+  },
+  {
+    "file": "public/assets/flavours/lemon.png",
+    "flavour": "Lemon",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "01602b636c1201aec7d952fee8ad03b8108b1a309fdd26d6056e89fd7a186c74"
+  },
+  {
+    "file": "public/assets/flavours/strawberry.png",
+    "flavour": "Strawberry",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "390ae8023603553cb2a38ca950b057901efed10289f5558befef49d0768f5617"
+  },
+  {
+    "file": "public/assets/flavours/mojito.png",
+    "flavour": "Mojito",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "a808ea590f0c765b3d009c937217f140bb1ac81a87768f7ecccf20da1696dc1a"
+  },
+  {
+    "file": "public/assets/flavours/cherry.png",
+    "flavour": "Cherry",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "bb42a7d9170aff3571d0818cbe7bdf45c69f56b027821d5d4a392f4009fccdaa"
+  },
+  {
+    "file": "public/assets/flavours/blackberry.png",
+    "flavour": "Blackberry",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "a673640298a504841a9bc7d1eab59e6732a9ebe18ab849e8c867dcd233570364"
+  },
+  {
+    "file": "public/assets/flavours/fig.png",
+    "flavour": "Fig",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "a1fa87df9128585c6cfd308ae34bdc269d84a71656fb1675b72763c07cea8c3e"
+  },
+  {
+    "file": "public/assets/flavours/melon.png",
+    "flavour": "Melon",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "72b723638f0045d537ba034cbd56beadf4f09d8818a601a00b4ebe29d451b789"
+  },
+  {
+    "file": "public/assets/flavours/sorrel.png",
+    "flavour": "Sorrel",
+    "width": 1254,
+    "height": 1254,
+    "sha256": "2f69b59a2549e461e42b09d2b41237e7cf82ca3096ea6abc76d50d80985debe7"
+  }
+]

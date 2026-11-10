@@ -1,0 +1,114 @@
+[
+  {
+    "id": "clotted-cream",
+    "name": "Clotted Cream",
+    "description": "Mellow and softly sweet, with a rich, velvety finish.",
+    "price": null,
+    "image": "/assets/flavours/clotted-cream.png"
+  },
+  {
+    "id": "chocolate",
+    "name": "Chocolate",
+    "description": "Deep cocoa notes unfold slowly, with a little bitterness beneath the sweetness.",
+    "price": null,
+    "image": "/assets/flavours/chocolate.png"
+  },
+  {
+    "id": "honey-almond",
+    "name": "Honey Almond",
+    "description": "Soft floral sweetness gives way to a warm, toasted finish.",
+    "price": null,
+    "image": "/assets/flavours/honey-almond.png"
+  },
+  {
+    "id": "pistachio",
+    "name": "Pistachio",
+    "description": "Mellow and nutty, with a delicate sweetness that lingers on the tongue.",
+    "price": null,
+    "image": "/assets/flavours/pistachio.png"
+  },
+  {
+    "id": "italian-caramel",
+    "name": "Italian Caramel",
+    "description": "Deep golden sweetness with a gently toasted edge.",
+    "price": null,
+    "image": "/assets/flavours/italian-caramel.png"
+  },
+  {
+    "id": "lotus-biscuit",
+    "name": "Lotus Biscuit",
+    "description": "Warm spice and toasted sweetness recall the last bite of a biscuit.",
+    "price": null,
+    "image": "/assets/flavours/lotus-biscuit.png"
+  },
+  {
+    "id": "mastic",
+    "name": "Mastic",
+    "description": "Cool and fragrant, with a delicate, pine-like note that lingers.",
+    "price": null,
+    "image": "/assets/flavours/mastic.png"
+  },
+  {
+    "id": "tahini-walnut",
+    "name": "Tahini & Walnut",
+    "description": "Deeply nutty and gently earthy, with a faint bittersweet finish.",
+    "price": null,
+    "image": "/assets/flavours/tahini-walnut.png"
+  },
+  {
+    "id": "lemon",
+    "name": "Lemon",
+    "description": "A bright flash of citrus, with a clean, puckering finish.",
+    "price": null,
+    "image": "/assets/flavours/lemon.png"
+  },
+  {
+    "id": "strawberry",
+    "name": "Strawberry",
+    "description": "Fragrant berry sweetness with a little tang on the finish.",
+    "price": null,
+    "image": "/assets/flavours/strawberry.png"
+  },
+  {
+    "id": "mojito",
+    "name": "Mojito",
+    "description": "A cool, minty first taste gives way to bright citrus notes.",
+    "price": null,
+    "image": "/assets/flavours/mojito.png"
+  },
+  {
+    "id": "cherry",
+    "name": "Cherry",
+    "description": "Round, juicy sweetness with a lively tart edge.",
+    "price": null,
+    "image": "/assets/flavours/cherry.png"
+  },
+  {
+    "id": "blackberry",
+    "name": "Blackberry",
+    "description": "Deep berry notes with a gentle bite of tartness.",
+    "price": null,
+    "image": "/assets/flavours/blackberry.png"
+  },
+  {
+    "id": "fig",
+    "name": "Fig",
+    "description": "Soft, honeyed sweetness with a mellow, earthy finish.",
+    "price": null,
+    "image": "/assets/flavours/fig.png"
+  },
+  {
+    "id": "melon",
+    "name": "Melon",
+    "description": "Light, fragrant sweetness that recalls a slice of ripe melon.",
+    "price": null,
+    "image": "/assets/flavours/melon.png"
+  },
+  {
+    "id": "sorrel",
+    "name": "Sorrel",
+    "description": "Fresh green notes and a bright, lemony tang.",
+    "price": null,
+    "image": "/assets/flavours/sorrel.png"
+  }
+]

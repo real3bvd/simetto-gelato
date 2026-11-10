@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.vite/
+*.log
+
+# Local design handoff and review materials
+/AGENTS.md
+/CODEX_PROMPT.md
+/DESIGN_BRIEF.md
+/design-qa.md
+/references/
