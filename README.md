@@ -19,7 +19,7 @@ Choose a named bowl from the scrollable strip at the bottom, or open the three-l
 
 The menu decodes the destination bowl before changing the image, name, notes and counter together. It warms the adjacent images and coalesces rapid navigation to the latest destination. Reduced-motion preferences switch flavours immediately.
 
-Use EN or TR in the header to change language while viewing any flavour. First-time visitors see English, and the browser remembers a visitor’s selection for future visits.
+The language button shows TR while browsing in English and EN while browsing in Turkish. Tap it to switch languages on the current flavour. First-time visitors see English, and the browser remembers a visitor’s selection for future visits.
 
 ## Editing the menu
 

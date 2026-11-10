@@ -33,20 +33,11 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
 .brand-logo { display: block; width: clamp(102px, 8.4vw, 138px); pointer-events: auto; }
 .brand-logo img { display: block; width: 100%; height: auto; filter: brightness(.29) saturate(.85); }
 .header-tools { display: flex; align-items: center; gap: clamp(6px, 1.2vw, 20px); }
-.language-switch { display: flex; position: relative; pointer-events: auto; }
-.language-switch::before {
-  content: ''; position: absolute; inset: 7px 0; border: 1px solid rgb(39 59 56 / .35);
-  border-radius: 18px; pointer-events: none;
+.language-button {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  pointer-events: auto; font-size: 13px; font-weight: 500; letter-spacing: .08em;
+  transition: background-color .18s ease;
 }
-.language-switch button {
-  position: relative; display: grid; place-items: center; width: 42px; height: 44px;
-  border-radius: 18px; font-size: 11px; letter-spacing: .08em;
-}
-.language-switch span {
-  display: grid; place-items: center; width: calc(100% - 6px); height: 24px;
-  border-radius: 14px; transition: background-color .18s ease, color .18s ease;
-}
-.language-switch [aria-pressed="true"] span { color: #fffaf1; background: var(--ink); }
 .shop-links { display: flex; align-items: center; gap: 2px; }
 .shop-links button { position: relative; margin-left: 9px; }
 .shop-links button::before { content: ''; position: absolute; left: -6px; height: 18px; width: 1px; background: rgb(39 59 56 / .27); }
@@ -77,7 +68,7 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(0, calc(var(--direction) * 100%), 0); }
 }
-.plate-stage { position: relative; width: min(74%, 67svh, 790px); aspect-ratio: 1; }
+.plate-stage { --plate-size: min(74%, 67svh, 790px); position: relative; width: calc(var(--plate-size) * .9); aspect-ratio: 1; }
 .plate-stage::before {
   content: ''; position: absolute; inset: -2.8%; border-radius: 50%;
   border: 1px solid rgb(43 67 59 / .26); pointer-events: none;
@@ -150,8 +141,7 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
 .flavour-copy p { max-width: 36ch; color: var(--muted); font-size: clamp(16px, 1.35vw, 22px); line-height: 1.58; }
 .flavour-copy .price { margin-top: .7em; }
 @media (hover: hover) {
-  .language-switch [aria-pressed="false"]:hover span { background: rgb(66 105 100 / .10); }
-  .shop-links :is(a, button):hover { background-color: rgb(66 105 100 / .10); }
+  .language-button:hover, .shop-links :is(a, button):hover { background-color: rgb(66 105 100 / .10); }
   .thumb:hover img { transform: translateY(-2px); }
   .thumb:not([aria-current]):hover { background: #edf0e6; }
 }
@@ -186,7 +176,7 @@ body:has(.index-sheet[open]) { overflow: hidden; }
   .masthead { padding: max(12px, env(safe-area-inset-top)) 5vw 0; }
   .brand-logo { width: clamp(83px, 23vw, 122px); }
   .scene { padding-block: var(--bowl-top-space) 18px; }
-  .plate-stage { width: min(83vw, calc(var(--picture-height) - var(--bowl-top-space) - 25px), 540px); }
+  .plate-stage { --plate-size: min(83vw, calc(var(--picture-height) - var(--bowl-top-space) - 25px), 540px); }
   .details { grid-area: 2 / 1; padding: clamp(21px, 3.3svh, 40px) 7vw; }
   .menu-label { gap: 12px; }
   .menu-label > :first-child { font-size: 10px; }
@@ -202,7 +192,6 @@ body:has(.index-sheet[open]) { overflow: hidden; }
   .masthead { padding-inline: 12px; }
   .brand-logo { width: clamp(72px, 21vw, 79px); }
   .header-tools { gap: 4px; }
-  .language-switch button { width: 36px; }
   .shop-links { gap: 0; }
   .shop-links button { margin-left: 4px; }
   .shop-links button::before { left: -2px; }
@@ -220,7 +209,7 @@ body:has(.index-sheet[open]) { overflow: hidden; }
   .menu { grid-template-rows: minmax(223px, 1fr) auto; }
   .masthead { padding: 6px 16px 0; }
   .brand-logo { width: 63px; }
-  .plate-stage { width: min(65%, 56svh); }
+  .plate-stage { --plate-size: min(65%, 56svh); }
   .details { padding: 53px 4vw 12px; }
   .menu-label > :first-child, .counter { font-size: 10px; }
   .flavour-copy h1 { font-size: clamp(29px, 4.5vw, 48px); margin: 10px 0; }

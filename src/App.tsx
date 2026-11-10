@@ -5,7 +5,6 @@ import type { Flavour, Language, Menu } from './menuContent'
 import { bowlSource, MENU_TRANSITION_MS, useFlavourMenu } from './useFlavourMenu'
 
 const number = (index: number) => String(index + 1).padStart(2, '0')
-const languages = { en: 'English', tr: 'Türkçe' } as const
 const colours: Record<string, string> = {
   'clotted-cream': '#c8c6b3', chocolate: '#c3b3a4', 'honey-almond': '#cec4a8',
   pistachio: '#b2cccc', 'italian-caramel': '#d3bea6', 'lotus-biscuit': '#d0b9a9',
@@ -87,6 +86,7 @@ function FlavourIndex({ dialog, menu, index, select }: {
 
 export function App() {
   const [language, setLanguage] = useState<Language>(initialLanguage)
+  const nextLanguage = language === 'en' ? 'tr' : 'en'
   const menu = menus[language]
   const flavours = menu.flavours
   const { index, previousIndex, direction, select, surfaceProps } = useFlavourMenu(menus.en.flavours)
@@ -96,10 +96,10 @@ export function App() {
     document.title = menu.title
     document.querySelector<HTMLMetaElement>('meta[name="description"]')!.content = menu.description
   }, [language, menu])
-  function chooseLanguage(next: Language) {
-    setLanguage(next)
+  function changeLanguage() {
+    setLanguage(nextLanguage)
     try {
-      localStorage.setItem(languagePreferenceKey, next)
+      localStorage.setItem(languagePreferenceKey, nextLanguage)
     } catch {
       // The switch also works when the browser blocks preference storage.
     }
@@ -117,11 +117,11 @@ export function App() {
           <img src={`${import.meta.env.BASE_URL}assets/simetto-logo.png`} width="504" height="370" alt="" draggable="false"/>
         </button>
         <div className="header-tools">
-          <div className="language-switch" role="group" aria-label={menu.languageLabel}>
-            {(['en', 'tr'] as const).map(code => <button type="button" key={code} lang={code}
-              aria-label={languages[code]} title={languages[code]} aria-pressed={language === code}
-              onClick={() => chooseLanguage(code)}><span>{code.toUpperCase()}</span></button>)}
-          </div>
+          <button type="button" className="language-button" lang={nextLanguage}
+            aria-label={`${nextLanguage.toUpperCase()} · ${menus[nextLanguage].switchToLanguage}`}
+            title={menus[nextLanguage].switchToLanguage} onClick={changeLanguage}>
+            {nextLanguage.toUpperCase()}
+          </button>
           <nav className="shop-links" aria-label={menu.shopLinks}>
             <a href="https://www.instagram.com/simetto_gelato?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw=="
               target="_blank" rel="noopener noreferrer" aria-label={menu.instagram} title="Instagram">
