@@ -19,9 +19,13 @@ Choose a named bowl from the scrollable strip at the bottom, or open the three-l
 
 The menu decodes the destination bowl before changing the image, name, notes and counter together. It warms the adjacent images and coalesces rapid navigation to the latest destination. Reduced-motion preferences switch flavours immediately.
 
+Use EN or TR in the header to change language while viewing any flavour. First-time visitors see English, and the browser remembers a visitor’s selection for future visits.
+
 ## Editing the menu
 
 Edit `data/flavours.json`. Each entry contains its name, a stable ID, the original PNG path, a short description, and a price. The descriptions are editable sensory suggestions for the preview. They can be replaced with the shop's approved copy or cleared.
+
+Turkish names and descriptions live in `data/flavours.tr.json`, keyed by the same flavour IDs. Both languages share the images, prices and menu order.
 
 All prices start as `null`. When the shop supplies prices, enter the full display string, including its currency, in the matching `price` field. Null or empty values stay hidden. The order of the data matches the source menu. The frontend rotates that order to open with Pistachio as 01 / 16.
 

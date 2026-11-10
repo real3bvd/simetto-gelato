@@ -1,24 +1,11 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties, RefObject } from 'react'
-import sourceMenu from '../data/flavours.json'
+import { initialLanguage, languagePreferenceKey, menus } from './menuContent'
+import type { Flavour, Language, Menu } from './menuContent'
 import { bowlSource, MENU_TRANSITION_MS, useFlavourMenu } from './useFlavourMenu'
 
-interface Flavour {
-  id: string
-  name: string
-  description: string
-  price: string | number | null
-  image: string
-}
-
-// Open on Pistachio and continue around the original handwritten menu.
-const first = sourceMenu.findIndex(flavour => flavour.id === 'pistachio')
-const flavours: Flavour[] = [...sourceMenu.slice(first), ...sourceMenu.slice(0, first)].map(flavour => ({
-  ...flavour,
-  image: import.meta.env.BASE_URL + flavour.image.replace(/^\//, ''),
-}))
 const number = (index: number) => String(index + 1).padStart(2, '0')
-const count = flavours.length
+const languages = { en: 'English', tr: 'Türkçe' } as const
 const colours: Record<string, string> = {
   'clotted-cream': '#c8c6b3', chocolate: '#c3b3a4', 'honey-almond': '#cec4a8',
   pistachio: '#b2cccc', 'italian-caramel': '#d3bea6', 'lotus-biscuit': '#d0b9a9',
@@ -34,7 +21,7 @@ function Thumbnail({ flavour }: { flavour: Flavour }) {
     }} />
 }
 
-function Selector({ index, select }: { index: number; select: (index: number) => void }) {
+function Selector({ menu, index, select }: { menu: Menu; index: number; select: (index: number) => void }) {
   const rail = useRef<HTMLElement>(null)
   useLayoutEffect(() => {
     const strip = rail.current
@@ -53,11 +40,11 @@ function Selector({ index, select }: { index: number; select: (index: number) =>
     const onResize = () => reveal('instant')
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
-  }, [index])
+  }, [index, menu])
 
-  return <nav ref={rail} className="selector" aria-label="Choose a flavour">
-    {flavours.map((flavour, i) => <button key={flavour.id} className="thumb" type="button"
-      tabIndex={i === index ? 0 : -1} aria-label={`Show ${flavour.name}`}
+  return <nav ref={rail} className="selector" aria-label={menu.choose}>
+    {menu.flavours.map((flavour, i) => <button key={flavour.id} className="thumb" type="button"
+      tabIndex={i === index ? 0 : -1} aria-label={menu.show(flavour.name)}
       aria-current={i === index ? 'true' : undefined} onClick={() => select(i)}>
       <Thumbnail flavour={flavour} />
       <span>{flavour.name}</span>
@@ -65,24 +52,24 @@ function Selector({ index, select }: { index: number; select: (index: number) =>
   </nav>
 }
 
-function Counter({ index }: { index: number }) {
-  return <span className="counter" aria-label={`Flavour ${index + 1} of ${count}`}>
-    <strong>{number(index)}</strong><span aria-hidden="true"> / </span>{count}
+function Counter({ index, menu }: { index: number; menu: Menu }) {
+  return <span className="counter" aria-label={menu.position(index + 1, menu.flavours.length)}>
+    <strong>{number(index)}</strong><span aria-hidden="true"> / </span>{menu.flavours.length}
   </span>
 }
 
-function FlavourIndex({ dialog, index, select }: {
-  dialog: RefObject<HTMLDialogElement | null>; index: number; select: (i: number) => void
+function FlavourIndex({ dialog, menu, index, select }: {
+  dialog: RefObject<HTMLDialogElement | null>; menu: Menu; index: number; select: (i: number) => void
 }) {
   return <dialog id="flavour-index" ref={dialog} className="index-sheet" aria-labelledby="index-title"
     onClick={event => { if (event.target === event.currentTarget) dialog.current?.close() }}>
     <div className="index-paper">
       <header className="sheet-heading">
-        <h2 id="index-title">Flavour index</h2>
-        <button className="close-index" onClick={() => dialog.current?.close()} aria-label="Close flavour index" autoFocus>×</button>
+        <h2 id="index-title">{menu.indexTitle}</h2>
+        <button className="close-index" onClick={() => dialog.current?.close()} aria-label={menu.closeIndex} autoFocus>×</button>
       </header>
       <ol className="index-list">
-        {flavours.map((flavour, i) => <li key={flavour.id}>
+        {menu.flavours.map((flavour, i) => <li key={flavour.id}>
           <button aria-current={i === index ? 'true' : undefined} onClick={() => {
             select(i)
             dialog.current?.close()
@@ -90,7 +77,7 @@ function FlavourIndex({ dialog, index, select }: {
             <span className="index-number">{number(i)}</span>
             <Thumbnail flavour={flavour} />
             <span className="index-name">{flavour.name}</span>
-            {i === index && <span className="current-dot" aria-label="Current flavour" />}
+            {i === index && <span className="current-dot" aria-hidden="true" />}
           </button>
         </li>)}
       </ol>
@@ -99,52 +86,75 @@ function FlavourIndex({ dialog, index, select }: {
 }
 
 export function App() {
-  const { index, previousIndex, direction, select, surfaceProps } = useFlavourMenu(flavours)
+  const [language, setLanguage] = useState<Language>(initialLanguage)
+  const menu = menus[language]
+  const flavours = menu.flavours
+  const { index, previousIndex, direction, select, surfaceProps } = useFlavourMenu(menus.en.flavours)
   const dialog = useRef<HTMLDialogElement>(null)
+  useLayoutEffect(() => {
+    document.documentElement.lang = language
+    document.title = menu.title
+    document.querySelector<HTMLMetaElement>('meta[name="description"]')!.content = menu.description
+  }, [language, menu])
+  function chooseLanguage(next: Language) {
+    setLanguage(next)
+    try {
+      localStorage.setItem(languagePreferenceKey, next)
+    } catch {
+      // The switch also works when the browser blocks preference storage.
+    }
+  }
   const current = flavours[index]
   const frames = previousIndex === null ? [index] : [previousIndex, index]
   const style = { '--direction': direction, '--duration': `${MENU_TRANSITION_MS}ms` } as CSSProperties
   const layerState = (i: number) => i !== index ? 'outgoing' : previousIndex === null ? 'settled' : 'incoming'
 
   return <>
-    <main className="menu" aria-label="Simetto Gelato flavour menu" style={style} {...surfaceProps}>
+    <main className="menu" aria-label={menu.mainLabel} style={style} {...surfaceProps}>
       <header className="masthead">
-        <button className="brand-logo" type="button" aria-label="Simetto Gelato, open flavour index" title="Open flavour index"
+        <button className="brand-logo" type="button" aria-label={`Simetto Gelato · ${menu.openIndex}`} title={menu.openIndex}
           aria-haspopup="dialog" onClick={() => dialog.current?.showModal()}>
           <img src={`${import.meta.env.BASE_URL}assets/simetto-logo.png`} width="504" height="370" alt="" draggable="false"/>
         </button>
-        <nav className="shop-links" aria-label="Shop and menu">
-          <a href="https://www.instagram.com/simetto_gelato?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw=="
-            target="_blank" rel="noopener noreferrer" aria-label="Simetto Gelato on Instagram (opens in a new tab)" title="Instagram">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="3" width="18" height="18" rx="5"/>
-              <circle cx="12" cy="12" r="4.15"/>
-              <circle cx="17.5" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
-            </svg>
-          </a>
-          <a href="https://maps.app.goo.gl/nPuzAu9Ph8iGiARQ7"
-            target="_blank" rel="noopener noreferrer" aria-label="Simetto Gelato on Google Maps (opens in a new tab)" title="Google Maps">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M19.3 9.6c0 5.1-7.3 11.9-7.3 11.9S4.7 14.7 4.7 9.6a7.3 7.3 0 0 1 14.6 0Z"/>
-              <circle cx="12" cy="9.6" r="2.6"/>
-            </svg>
-          </a>
-          <button type="button" aria-label="Open flavour index" title="Flavour index"
-            aria-haspopup="dialog" aria-controls="flavour-index" onClick={() => dialog.current?.showModal()}>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 5.5h18M3 12h18M3 18.5h18"/>
-            </svg>
-          </button>
-        </nav>
+        <div className="header-tools">
+          <div className="language-switch" role="group" aria-label={menu.languageLabel}>
+            {(['en', 'tr'] as const).map(code => <button type="button" key={code} lang={code}
+              aria-label={languages[code]} title={languages[code]} aria-pressed={language === code}
+              onClick={() => chooseLanguage(code)}><span>{code.toUpperCase()}</span></button>)}
+          </div>
+          <nav className="shop-links" aria-label={menu.shopLinks}>
+            <a href="https://www.instagram.com/simetto_gelato?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw=="
+              target="_blank" rel="noopener noreferrer" aria-label={menu.instagram} title="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5"/>
+                <circle cx="12" cy="12" r="4.15"/>
+                <circle cx="17.5" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="https://maps.app.goo.gl/nPuzAu9Ph8iGiARQ7"
+              target="_blank" rel="noopener noreferrer" aria-label={menu.maps} title={menu.mapsTitle}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19.3 9.6c0 5.1-7.3 11.9-7.3 11.9S4.7 14.7 4.7 9.6a7.3 7.3 0 0 1 14.6 0Z"/>
+                <circle cx="12" cy="9.6" r="2.6"/>
+              </svg>
+            </a>
+            <button type="button" aria-label={menu.openIndex} title={menu.indexTitle}
+              aria-haspopup="dialog" aria-controls="flavour-index" onClick={() => dialog.current?.showModal()}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 5.5h18M3 12h18M3 18.5h18"/>
+              </svg>
+            </button>
+          </nav>
+        </div>
       </header>
 
-      <section className="visual" aria-label={`${current.name} gelato bowl`}>
+      <section className="visual" aria-label={menu.bowl(current.name)}>
         {frames.map(i => <div key={flavours[i].id} className={`scene ${layerState(i)}`}
           aria-hidden={i !== index} style={{ backgroundColor: colours[flavours[i].id] }}>
           <div className="plate-stage">
             <div className="drag-surface">
               <img className="bowl" src={bowlSource(flavours[i])} width="1254" height="1254"
-                alt={`An overhead view of ${flavours[i].name.toLowerCase()} gelato in a white bowl`}
+                alt={menu.bowlAlt(flavours[i].name)}
                 draggable="false" onError={event => {
                   if (event.currentTarget.getAttribute('src') !== flavours[i].image) event.currentTarget.src = flavours[i].image
                 }} />
@@ -153,9 +163,9 @@ export function App() {
         </div>)}
       </section>
 
-      <section className="details" aria-label="Selected flavour">
+      <section className="details" aria-label={menu.selected}>
         <div className="tasting-note">
-          <div className="menu-label"><span>Gelato menu</span><Counter index={index}/></div>
+          <div className="menu-label"><span>{menu.menuLabel}</span><Counter index={index} menu={menu}/></div>
           <div className="copy-stack">
             {flavours.map((flavour, i) => <article
               className={`flavour-copy ${(i === index || i === previousIndex) ? layerState(i) : 'standby'}`}
@@ -167,9 +177,9 @@ export function App() {
           </div>
         </div>
       </section>
-      <Selector index={index} select={select}/>
-      <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">{current.name}, flavour {index + 1} of {count}</span>
+      <Selector menu={menu} index={index} select={select}/>
+      <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">{current.name}, {menu.position(index + 1, flavours.length)}</span>
     </main>
-    <FlavourIndex dialog={dialog} index={index} select={select}/>
+    <FlavourIndex dialog={dialog} menu={menu} index={index} select={select}/>
   </>
 }

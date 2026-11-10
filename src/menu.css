@@ -32,6 +32,21 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
 }
 .brand-logo { display: block; width: clamp(102px, 8.4vw, 138px); pointer-events: auto; }
 .brand-logo img { display: block; width: 100%; height: auto; filter: brightness(.29) saturate(.85); }
+.header-tools { display: flex; align-items: center; gap: clamp(6px, 1.2vw, 20px); }
+.language-switch { display: flex; position: relative; pointer-events: auto; }
+.language-switch::before {
+  content: ''; position: absolute; inset: 7px 0; border: 1px solid rgb(39 59 56 / .35);
+  border-radius: 18px; pointer-events: none;
+}
+.language-switch button {
+  position: relative; display: grid; place-items: center; width: 42px; height: 44px;
+  border-radius: 18px; font-size: 11px; letter-spacing: .08em;
+}
+.language-switch span {
+  display: grid; place-items: center; width: calc(100% - 6px); height: 24px;
+  border-radius: 14px; transition: background-color .18s ease, color .18s ease;
+}
+.language-switch [aria-pressed="true"] span { color: #fffaf1; background: var(--ink); }
 .shop-links { display: flex; align-items: center; gap: 2px; }
 .shop-links button { position: relative; margin-left: 9px; }
 .shop-links button::before { content: ''; position: absolute; left: -6px; height: 18px; width: 1px; background: rgb(39 59 56 / .27); }
@@ -135,6 +150,7 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
 .flavour-copy p { max-width: 36ch; color: var(--muted); font-size: clamp(16px, 1.35vw, 22px); line-height: 1.58; }
 .flavour-copy .price { margin-top: .7em; }
 @media (hover: hover) {
+  .language-switch [aria-pressed="false"]:hover span { background: rgb(66 105 100 / .10); }
   .shop-links :is(a, button):hover { background-color: rgb(66 105 100 / .10); }
   .thumb:hover img { transform: translateY(-2px); }
   .thumb:not([aria-current]):hover { background: #edf0e6; }
@@ -181,6 +197,15 @@ body:has(.index-sheet[open]) { overflow: hidden; }
   .thumb { flex: 0 0 clamp(95px, 27vw, 155px); flex-direction: column; justify-content: flex-start; gap: 5px; padding: 7px 7px 12px; text-align: center; }
   .thumb img { width: clamp(48px, 13.5vw, 70px); }
   .thumb span { font-size: clamp(14px, 3.4vw, 18px); text-wrap: balance; }
+}
+@media (max-width: 375px) {
+  .masthead { padding-inline: 12px; }
+  .brand-logo { width: clamp(72px, 21vw, 79px); }
+  .header-tools { gap: 4px; }
+  .language-switch button { width: 36px; }
+  .shop-links { gap: 0; }
+  .shop-links button { margin-left: 4px; }
+  .shop-links button::before { left: -2px; }
 }
 @media (max-width: 529px) and (max-height: 665px) {
   .menu { --picture-height: max(210px, 48svh); --bowl-top-space: 44px; }

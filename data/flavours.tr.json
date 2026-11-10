@@ -1,0 +1,66 @@
+{
+  "clotted-cream": {
+    "name": "Kaymak",
+    "description": "Hafif tatlı, yumuşak bir lezzet. Damakta kadifemsi bir iz bırakır."
+  },
+  "chocolate": {
+    "name": "Çikolata",
+    "description": "Yoğun kakao tadı yavaşça açılır. Tatlılığın altında hafif bir burukluk hissedilir."
+  },
+  "honey-almond": {
+    "name": "Ballı Badem",
+    "description": "Önce çiçeksi bir tatlılık, ardından kavrulmuş bademi anımsatan sıcak bir tat."
+  },
+  "pistachio": {
+    "name": "Antep Fıstığı",
+    "description": "Yumuşak fıstık tadı damakta hafif bir tatlılık bırakır."
+  },
+  "italian-caramel": {
+    "name": "İtalyan Karameli",
+    "description": "Yoğun karamel tadına hafif bir kavrukluk eşlik eder."
+  },
+  "lotus-biscuit": {
+    "name": "Lotus Bisküvi",
+    "description": "Baharat kokusu ve hafif kavruk bir tatlılık, bisküvinin son lokmasını anımsatır."
+  },
+  "mastic": {
+    "name": "Damla Sakızı",
+    "description": "Ferah ve mis kokulu. Damakta çamı anımsatan hafif bir tat kalır."
+  },
+  "tahini-walnut": {
+    "name": "Tahin ve Ceviz",
+    "description": "Yoğun ceviz tadına hafif topraksı notalar eşlik eder. Sonunda tatlı bir burukluk kalır."
+  },
+  "lemon": {
+    "name": "Limon",
+    "description": "Canlı bir narenciye tadı, ardından ağzı hafifçe buruşturan ferah bir ekşilik."
+  },
+  "strawberry": {
+    "name": "Çilek",
+    "description": "Mis kokulu çileğin tatlılığı, damakta hafif bir mayhoşluk bırakır."
+  },
+  "mojito": {
+    "name": "Mojito",
+    "description": "İlk kaşıkta serin bir nane tadı gelir, ardından canlı narenciye notaları belirir."
+  },
+  "cherry": {
+    "name": "Kiraz",
+    "description": "Sulu kirazın dolgun tatlılığına canlı bir ekşilik eşlik eder."
+  },
+  "blackberry": {
+    "name": "Böğürtlen",
+    "description": "Yoğun böğürtlen tadı damakta hafif bir mayhoşluk bırakır."
+  },
+  "fig": {
+    "name": "İncir",
+    "description": "Balı anımsatan yumuşak tatlılığın ardından hafif topraksı bir tat gelir."
+  },
+  "melon": {
+    "name": "Kavun",
+    "description": "Bir dilim olgun kavunu anımsatan hafif, mis kokulu bir tatlılık."
+  },
+  "sorrel": {
+    "name": "Kuzukulağı",
+    "description": "Taze otları anımsatan bir koku ve limon gibi canlı bir ekşilik."
+  }
+}

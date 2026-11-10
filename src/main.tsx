@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
-import '@fontsource/playfair-display/latin-700.css'
-import '@fontsource/playfair-display/latin-500.css'
-import '@fontsource/roboto/latin-400.css'
+import '@fontsource/playfair-display/700.css'
+import '@fontsource/playfair-display/500.css'
+import '@fontsource/roboto/400.css'
 import { App } from './App'
 import './menu.css'
 
