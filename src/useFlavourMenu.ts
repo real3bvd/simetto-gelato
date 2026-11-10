@@ -193,6 +193,7 @@ export function useFlavourMenu(flavours: readonly Bowl[]) {
       if (event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey || handlesOwnInput(event.target)) return
       if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
       const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+      if ((horizontal || event.shiftKey) && event.target instanceof Element && event.target.closest('.selector')) return
       if (!horizontal && document.documentElement.scrollHeight > window.innerHeight + 2) return
       const now = performance.now()
       if (now - lastWheel > 180) {
@@ -235,7 +236,7 @@ export function useFlavourMenu(flavours: readonly Bowl[]) {
     suppressClickUntil.current = 0
     if (event.touches.length !== 1 || (window.visualViewport?.scale ?? 1) > 1.01) return
     if (handlesOwnInput(event.target) || (event.target instanceof Element &&
-      event.target.closest('a, button, [role="button"]'))) return
+      event.target.closest('a, button, [role="button"], .selector'))) return
 
     const point = event.touches[0]
     touch.current = {
@@ -294,7 +295,7 @@ export function useFlavourMenu(flavours: readonly Bowl[]) {
   }
 
   return {
-    ...frame, select, next, prev,
+    ...frame, select,
     surfaceProps: {
       onTouchStart, onTouchMove, onTouchEnd, onClickCapture, onTouchCancel: resetTouch,
     },

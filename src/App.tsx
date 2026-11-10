@@ -27,12 +27,6 @@ const colours: Record<string, string> = {
   blackberry: '#c6bdcf', fig: '#cfc2c5', melon: '#c5cdb4', sorrel: '#b5c8b8',
 }
 
-function Arrow({ back = false }: { back?: boolean }) {
-  return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className={back ? 'arrow back' : 'arrow'}>
-    <path d="M3.5 12h16M13 5.5l6.5 6.5-6.5 6.5" />
-  </svg>
-}
-
 function Thumbnail({ flavour }: { flavour: Flavour }) {
   return <img src={`${import.meta.env.BASE_URL}assets/thumbs/${flavour.id}.webp`} width="128" height="128" alt="" draggable="false"
     onError={event => {
@@ -42,34 +36,38 @@ function Thumbnail({ flavour }: { flavour: Flavour }) {
 
 function Selector({ index, select }: { index: number; select: (index: number) => void }) {
   const rail = useRef<HTMLElement>(null)
-  const start = Math.max(0, Math.min(index - 2, count - 5))
   useLayoutEffect(() => {
-    if (rail.current?.contains(document.activeElement)) {
-      rail.current.querySelector<HTMLButtonElement>('[aria-current="true"]')?.focus({ preventScroll: true })
+    const strip = rail.current
+    const button = strip?.querySelector<HTMLButtonElement>('[aria-current="true"]')
+    if (!strip || !button) return
+    if (strip.contains(document.activeElement)) button.focus({ preventScroll: true })
+    // Bring the chosen flavour and its neighbours into view without moving the page.
+    const reveal = (behavior: ScrollBehavior) => {
+      const left = button.offsetLeft - strip.scrollLeft
+      const edge = Math.min(button.offsetWidth, strip.clientWidth / 4)
+      if (left < edge || left + button.offsetWidth > strip.clientWidth - edge) {
+        strip.scrollTo({ left: button.offsetLeft - (strip.clientWidth - button.offsetWidth) / 2, behavior })
+      }
     }
+    reveal(window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth')
+    const onResize = () => reveal('instant')
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
   }, [index])
 
-  // Keep each keyed button mounted while it moves through the visible window.
-  return <nav ref={rail} className="selector" aria-label="Nearby flavours">
-    <div className="thumb-window">
-      {flavours.map((flavour, i) => {
-        const offset = i - start - 2
-        const visible = Math.abs(offset) <= 2
-        return <button key={flavour.id} className="thumb" type="button"
-          style={{ '--offset': Math.max(-3, Math.min(3, offset)) } as CSSProperties}
-          data-visible={visible} aria-hidden={!visible} tabIndex={i === index ? 0 : -1}
-          aria-label={`Show ${flavour.name}`} aria-current={i === index ? 'true' : undefined}
-          onClick={() => select(i)}>
-          <Thumbnail flavour={flavour} />
-        </button>
-      })}
-    </div>
+  return <nav ref={rail} className="selector" aria-label="Choose a flavour">
+    {flavours.map((flavour, i) => <button key={flavour.id} className="thumb" type="button"
+      tabIndex={i === index ? 0 : -1} aria-label={`Show ${flavour.name}`}
+      aria-current={i === index ? 'true' : undefined} onClick={() => select(i)}>
+      <Thumbnail flavour={flavour} />
+      <span>{flavour.name}</span>
+    </button>)}
   </nav>
 }
 
 function Counter({ index }: { index: number }) {
   return <span className="counter" aria-label={`Flavour ${index + 1} of ${count}`}>
-    <strong>{number(index)}</strong><i aria-hidden="true"/><span>{count}</span>
+    <strong>{number(index)}</strong><span aria-hidden="true"> / </span>{count}
   </span>
 }
 
@@ -92,7 +90,7 @@ function FlavourIndex({ dialog, index, select }: {
             <span className="index-number">{number(i)}</span>
             <Thumbnail flavour={flavour} />
             <span className="index-name">{flavour.name}</span>
-            {i === index ? <span className="current-dot" aria-label="Current flavour" /> : <Arrow />}
+            {i === index && <span className="current-dot" aria-label="Current flavour" />}
           </button>
         </li>)}
       </ol>
@@ -101,7 +99,7 @@ function FlavourIndex({ dialog, index, select }: {
 }
 
 export function App() {
-  const { index, previousIndex, direction, prev, next, select, surfaceProps } = useFlavourMenu(flavours)
+  const { index, previousIndex, direction, select, surfaceProps } = useFlavourMenu(flavours)
   const dialog = useRef<HTMLDialogElement>(null)
   const current = flavours[index]
   const frames = previousIndex === null ? [index] : [previousIndex, index]
@@ -153,27 +151,23 @@ export function App() {
             </div>
           </div>
         </div>)}
-        <span className="browse-hint"><span className="scroll-hint">Scroll to browse</span><span className="swipe-hint">Swipe to browse</span></span>
       </section>
-
-      <Selector index={index} select={select}/>
 
       <section className="details" aria-label="Selected flavour">
-        <div className="copy-stack">
-          {flavours.map((flavour, i) => <article
-            className={`flavour-copy ${(i === index || i === previousIndex) ? layerState(i) : 'standby'}`}
-            key={flavour.id} aria-hidden={i !== index} inert={i !== index}>
-            <Counter index={i}/>
-            <h1>{flavour.name}</h1>
-            <p>{flavour.description}</p>
-            {flavour.price != null && flavour.price !== '' && <p className="price">{flavour.price}</p>}
-          </article>)}
-        </div>
-        <div className="browse-controls" role="group" aria-label="Browse flavours">
-          <button className="arrow-button" onClick={prev} aria-label="Previous flavour"><Arrow back/></button>
-          <button className="arrow-button" onClick={next} aria-label="Next flavour"><Arrow/></button>
+        <div className="tasting-note">
+          <div className="menu-label"><span>Gelato menu</span><Counter index={index}/></div>
+          <div className="copy-stack">
+            {flavours.map((flavour, i) => <article
+              className={`flavour-copy ${(i === index || i === previousIndex) ? layerState(i) : 'standby'}`}
+              key={flavour.id} aria-hidden={i !== index} inert={i !== index}>
+              <h1>{flavour.name}</h1>
+              <p>{flavour.description}</p>
+              {flavour.price != null && flavour.price !== '' && <p className="price">{flavour.price}</p>}
+            </article>)}
+          </div>
         </div>
       </section>
+      <Selector index={index} select={select}/>
       <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">{current.name}, flavour {index + 1} of {count}</span>
     </main>
     <FlavourIndex dialog={dialog} index={index} select={select}/>

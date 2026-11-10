@@ -15,7 +15,7 @@ Open the local address Vite prints in the terminal. To check TypeScript and comp
 
 ## Browsing
 
-Use the arrow buttons, a nearby bowl thumbnail, or the flavour index to choose any bowl. Desktop users can browse with the wheel or arrow keys. Home and End select the first and last displayed flavours. Phones support horizontal swipes and normal vertical scrolling. Escape closes the index.
+Choose a named bowl from the scrollable strip at the bottom, or open the three-line flavour index. Desktop users can browse with the wheel or arrow keys. Home and End select the first and last displayed flavours. On phones, swipe the featured bowl to change flavour or scroll the strip to find one by name. Escape closes the index.
 
 The menu decodes the destination bowl before changing the image, name, notes and counter together. It warms the adjacent images and coalesces rapid navigation to the latest destination. Reduced-motion preferences switch flavours immediately.
 
