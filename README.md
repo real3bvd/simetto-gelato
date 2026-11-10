@@ -31,4 +31,6 @@ The three-line menu and the transparent Simetto logo both open the flavour index
 
 ## Publishing
 
-Pushing to `main` builds and deploys the menu to [GitHub Pages](https://real3bvd.github.io/simetto-gelato/). The **Publish menu** workflow in the repository’s Actions tab shows the build and deployment status.
+The [live menu](https://real3bvd.github.io/simetto-gelato/) is served from the root of the `gh-pages` branch. Keep source changes on `main`. To publish an update from a checkout with GitHub push access, install the locked dependencies with `npm ci`, push your changes to `main`, and run `npm run deploy`.
+
+The deploy command checks TypeScript, builds the site locally and pushes the contents of `dist/` to `gh-pages`. GitHub Pages then updates the same public address.
