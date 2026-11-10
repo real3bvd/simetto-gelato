@@ -15,7 +15,7 @@ Open the local address Vite prints in the terminal. To check TypeScript and comp
 
 ## Browsing
 
-Choose a named bowl from the scrollable strip at the bottom, or open the three-line flavour index. Desktop users can browse with the wheel or arrow keys. Home and End select the first and last displayed flavours. On phones, swipe the featured bowl to change flavour or scroll the strip to find one by name. Escape closes the index.
+Choose a named bowl from the scrollable strip at the bottom. Desktop users can browse with the wheel or arrow keys. Home and End select the first and last displayed flavours. On phones, swipe the featured bowl to change flavour or scroll the strip to find one by name.
 
 The menu decodes the destination bowl before changing the image, name, notes and counter together. It warms the adjacent images and coalesces rapid navigation to the latest destination. Reduced-motion preferences switch flavours immediately.
 
@@ -31,7 +31,7 @@ All prices start as `null`. When the shop supplies prices, enter the full displa
 
 The unchanged PNGs live in `public/assets/flavours/`. Full-size WebP delivery images live in `public/assets/bowls/` and 128-pixel thumbnails in `public/assets/thumbs/`, each named by flavour ID. Keep all three versions in sync when replacing a bowl. The original checksums are in `ASSET_MANIFEST.json`.
 
-The three-line menu and the transparent Simetto logo both open the flavour index.
+The three-line button and the Simetto logo open the site navigation. Menu returns to the selected flavour. About is disabled.
 
 ## Publishing
 

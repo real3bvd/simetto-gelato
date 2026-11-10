@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
-import type { CSSProperties, RefObject } from 'react'
+import type { CSSProperties } from 'react'
 import { initialLanguage, languagePreferenceKey, menus } from './menuContent'
 import type { Flavour, Language, Menu } from './menuContent'
 import { bowlSource, MENU_TRANSITION_MS, useFlavourMenu } from './useFlavourMenu'
@@ -57,33 +57,6 @@ function Counter({ index, menu }: { index: number; menu: Menu }) {
   </span>
 }
 
-function FlavourIndex({ dialog, menu, index, select }: {
-  dialog: RefObject<HTMLDialogElement | null>; menu: Menu; index: number; select: (i: number) => void
-}) {
-  return <dialog id="flavour-index" ref={dialog} className="index-sheet" aria-labelledby="index-title"
-    onClick={event => { if (event.target === event.currentTarget) dialog.current?.close() }}>
-    <div className="index-paper">
-      <header className="sheet-heading">
-        <h2 id="index-title">{menu.indexTitle}</h2>
-        <button className="close-index" onClick={() => dialog.current?.close()} aria-label={menu.closeIndex} autoFocus>×</button>
-      </header>
-      <ol className="index-list">
-        {menu.flavours.map((flavour, i) => <li key={flavour.id}>
-          <button aria-current={i === index ? 'true' : undefined} onClick={() => {
-            select(i)
-            dialog.current?.close()
-          }}>
-            <span className="index-number">{number(i)}</span>
-            <Thumbnail flavour={flavour} />
-            <span className="index-name">{flavour.name}</span>
-            {i === index && <span className="current-dot" aria-hidden="true" />}
-          </button>
-        </li>)}
-      </ol>
-    </div>
-  </dialog>
-}
-
 export function App() {
   const [language, setLanguage] = useState<Language>(initialLanguage)
   const nextLanguage = language === 'en' ? 'tr' : 'en'
@@ -112,8 +85,8 @@ export function App() {
   return <>
     <main className="menu" aria-label={menu.mainLabel} style={style} {...surfaceProps}>
       <header className="masthead">
-        <button className="brand-logo" type="button" aria-label={`Simetto Gelato · ${menu.openIndex}`} title={menu.openIndex}
-          aria-haspopup="dialog" onClick={() => dialog.current?.showModal()}>
+        <button className="brand-logo" type="button" aria-label={`Simetto Gelato · ${menu.openNavigation}`} title={menu.openNavigation}
+          aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
           <img src={`${import.meta.env.BASE_URL}assets/simetto-logo.png`} width="504" height="370" alt="" draggable="false"/>
         </button>
         <div className="header-tools">
@@ -138,8 +111,8 @@ export function App() {
                 <circle cx="12" cy="9.6" r="2.6"/>
               </svg>
             </a>
-            <button type="button" aria-label={menu.openIndex} title={menu.indexTitle}
-              aria-haspopup="dialog" aria-controls="flavour-index" onClick={() => dialog.current?.showModal()}>
+            <button type="button" aria-label={menu.openNavigation} title={menu.openNavigation}
+              aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M3 5.5h18M3 12h18M3 18.5h18"/>
               </svg>
@@ -180,6 +153,12 @@ export function App() {
       <Selector menu={menu} index={index} select={select}/>
       <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">{current.name}, {menu.position(index + 1, flavours.length)}</span>
     </main>
-    <FlavourIndex dialog={dialog} menu={menu} index={index} select={select}/>
+    <dialog id="site-navigation" ref={dialog} className="site-navigation" aria-label={menu.navigation}
+      onClick={event => { if (event.target === event.currentTarget) event.currentTarget.close() }}>
+      <form method="dialog">
+        <button type="submit" autoFocus>{menu.menuPage}</button>
+        <button type="button" disabled>{menu.aboutPage}</button>
+      </form>
+    </dialog>
   </>
 }
