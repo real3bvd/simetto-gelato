@@ -65,7 +65,6 @@ export function Landing({ menu, onNavVisibility }: { menu: Menu; onNavVisibility
   }, [onNavVisibility])
 
   return <section ref={hero} className="landing" aria-labelledby="landing-title">
-    <div className="landing-orbit" aria-hidden="true"/>
     <Cup flavour="pistachio"/>
     <Cup flavour="strawberry"/>
     <div className="landing-copy">

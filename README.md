@@ -9,6 +9,7 @@ A Simetto Gelato landing page and browse-only menu built with React, TypeScript 
 | Page layout, buttons and navigation | [src/App.tsx](src/App.tsx) |
 | Landing headline, cup placement and scroll movement | [src/Landing.tsx](src/Landing.tsx) · [src/landing.css](src/landing.css) |
 | Bowl size, colours, spacing and animations | [src/menu.css](src/menu.css) |
+| Shared cream background, curves and paper grain | [src/menu.css](src/menu.css), starting at `.site-background` |
 | Swipes, keyboard controls and transition timing | [src/useFlavourMenu.ts](src/useFlavourMenu.ts) |
 | Flavour names, descriptions and prices | [English menu and prices](data/flavours.json) · [Turkish translations](data/flavours.tr.json) |
 | English and Turkish interface labels | [src/menuContent.ts](src/menuContent.ts) |

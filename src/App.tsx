@@ -6,13 +6,6 @@ import { bowlSource, MENU_TRANSITION_MS, useFlavourMenu } from './useFlavourMenu
 import { Landing } from './Landing'
 
 const number = (index: number) => String(index + 1).padStart(2, '0')
-const colours: Record<string, string> = {
-  'clotted-cream': '#c8c6b3', chocolate: '#c3b3a4', 'honey-almond': '#cec4a8',
-  pistachio: '#b2cccc', 'italian-caramel': '#d3bea6', 'lotus-biscuit': '#d0b9a9',
-  mastic: '#bdd0c5', 'tahini-walnut': '#c9c3af', lemon: '#d2d0af',
-  strawberry: '#dec2bd', mojito: '#b9cec1', cherry: '#d3b9bc',
-  blackberry: '#c6bdcf', fig: '#cfc2c5', melon: '#c5cdb4', sorrel: '#b5c8b8',
-}
 
 function Thumbnail({ flavour }: { flavour: Flavour }) {
   return <img src={`${import.meta.env.BASE_URL}assets/thumbs/${flavour.id}.webp`} width="128" height="128" alt="" draggable="false"
@@ -85,6 +78,9 @@ export function App() {
   const layerState = (i: number) => i !== index ? 'outgoing' : previousIndex === null ? 'settled' : 'incoming'
 
   return <>
+    <div className="site-background" aria-hidden="true">
+      <div className="background-curves"/>
+    </div>
     <header className="masthead" data-visible={navVisible} inert={!navVisible}>
       <button className="brand-logo" type="button" aria-label={`Simetto Gelato · ${menu.openNavigation}`} title={menu.openNavigation}
         aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
@@ -127,7 +123,7 @@ export function App() {
         ref={menuRef} style={style} {...surfaceProps}>
         <section className="visual" aria-label={menu.bowl(current.name)}>
           {frames.map(i => <div key={flavours[i].id} className={`scene ${layerState(i)}`}
-            aria-hidden={i !== index} style={{ backgroundColor: colours[flavours[i].id] }}>
+            aria-hidden={i !== index}>
             <div className="plate-stage">
               <div className="drag-surface">
                 <img className="bowl" src={bowlSource(flavours[i])} width="1254" height="1254"
