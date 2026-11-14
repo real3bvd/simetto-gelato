@@ -27,7 +27,7 @@
   position: absolute;
   inset: auto 0 0;
   height: clamp(96px, 14svh, 140px);
-  z-index: 0;
+  z-index: -1;
   background: linear-gradient(rgb(245 241 233 / 0), #f5f1e9);
   pointer-events: none;
 }
@@ -42,23 +42,26 @@
   mask-image: linear-gradient(100deg, #000 3%, transparent 33% 64%, #000);
   pointer-events: none;
 }
-.landing-copy { position: relative; z-index: 1; text-align: center; }
-.landing-signature { display: flex; align-items: center; justify-content: center; gap: 20px; }
+.landing-copy { position: relative; text-align: center; }
+.landing-signature { position: relative; z-index: 3; display: flex; align-items: center; justify-content: center; gap: 20px; }
 .landing-signature::before, .landing-signature::after {
   content: ''; width: clamp(24px, 3vw, 52px); height: 1px; background: rgb(57 79 67 / .36);
 }
 .landing-signature img { width: clamp(104px, 10vw, 164px); height: auto; filter: brightness(.29) saturate(.85); }
 .landing-copy h1 {
+  position: relative; z-index: 1;
   margin: clamp(24px, 4svh, 52px) 0 0;
   font: italic 400 var(--headline-size)/.96 var(--serif);
   letter-spacing: -.064em;
 }
 .landing-copy h1 span { display: block; }
 .landing-copy p {
+  position: relative; z-index: 3;
   margin: clamp(22px, 3.4svh, 37px) 0 clamp(28px, 4.5svh, 52px);
   font: italic 400 clamp(17px, 1.45vw, 26px)/1.4 var(--serif);
 }
 .discover {
+  position: relative; z-index: 3;
   min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 22px;
   padding: 12px clamp(22px, 2.5vw, 48px); border: 1px solid currentColor; border-radius: 99px;
   background: #f5f1e9; color: inherit; text-decoration: none;
@@ -76,8 +79,7 @@
 }
 .landing-cup.pistachio {
   --tilt: 12deg; --arrival-x: -26px; --travel-x: -11vw; --travel-y: 24svh; --turn: -5deg;
-  left: calc(50% - var(--headline-size) * 1.64 - var(--pistachio-width) * .8);
-  top: 54%; transform: translateY(-50%);
+  left: -4.8vw; top: 66%; transform: translateY(-50%);
 }
 .landing-cup.strawberry {
   --tilt: -14deg; --arrival-x: 28px; --travel-x: 9vw; --travel-y: 18svh; --turn: 4deg;
@@ -97,7 +99,7 @@
 @media (max-width: 700px) and (orientation: portrait) {
   .landing {
     --headline-size: clamp(54px, 12vw, 74px);
-    --pistachio-width: min(53vw, 27svh);
+    --pistachio-width: min(59vw, 32svh);
     min-height: max(530px, 100svh); padding: 75px 18px;
   }
   .landing-copy h1 { margin-top: 20px; }
@@ -105,8 +107,9 @@
   .landing-signature { gap: 13px; }
   .landing-signature img { width: clamp(88px, 23vw, 118px); }
   .discover { min-height: 46px; padding: 12px 20px; gap: 15px; font-size: 10px; }
+  .landing-cup { z-index: 0; }
   .landing-cup.pistachio {
-    top: 50%; --tilt: 14deg; --travel-y: 12svh;
+    left: -7vw; top: 84%; --tilt: 14deg; --travel-y: 12svh;
   }
   .landing-cup.strawberry {
     right: -7vw; top: 16%; width: min(55vw, 30svh); --tilt: -15deg; --travel-y: 18svh;
@@ -127,7 +130,13 @@
 }
 @media (max-width: 700px) and (max-height: 665px) and (orientation: portrait) {
   .landing { --pistachio-width: min(53vw, 26svh); }
+  .landing-cup.pistachio { top: 86%; }
   .landing-cup.strawberry { top: 15%; width: min(48vw, 26svh); }
+}
+@media (min-width: 1100px) {
+  .landing { --headline-size: clamp(76px, 7.2vw, 138px); }
+  .landing-copy h1 { letter-spacing: -.03em; }
+  .landing-copy h1 span { display: inline; }
 }
 @media (prefers-reduced-motion: reduce) {
   .landing-cup picture { animation: none; }
