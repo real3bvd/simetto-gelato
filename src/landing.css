@@ -3,12 +3,10 @@
   --headline-size: clamp(64px, 6.6vw, 128px);
   --pistachio-width: clamp(272px, 39vw, 660px);
   position: relative;
-  isolation: isolate;
   display: grid;
   place-items: center;
   min-height: max(560px, 100svh);
   padding: 50px 20px 64px;
-  overflow: hidden;
   color: #19382e;
 }
 .landing-copy { position: relative; text-align: center; }
@@ -76,7 +74,6 @@
   .landing-signature { gap: 13px; }
   .landing-signature img { width: clamp(88px, 23vw, 118px); }
   .discover { min-height: 46px; padding: 12px 20px; gap: 15px; font-size: 10px; }
-  .landing-cup { z-index: 0; }
   .landing-cup.pistachio {
     left: -7vw; top: 84%; --tilt: 14deg; --travel-y: 12svh;
   }

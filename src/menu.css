@@ -18,6 +18,8 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 #root { isolation: isolate; }
+/* Keep the cups inside the page width while allowing them to cross the section join. */
+main { position: relative; isolation: isolate; overflow: clip; }
 .site-background {
   position: fixed; inset: 0; z-index: -1; overflow: hidden;
   background: var(--background-cream); pointer-events: none;
@@ -38,7 +40,10 @@ html { scroll-behavior: smooth; }
 }
 .site-background::after {
   content: ''; position: absolute; inset: 0;
-  background: url('/assets/paper-grain.png') repeat; opacity: .8;
+  background-image: url('/assets/paper-grain.png'), url('/assets/paper-grain.png');
+  background-size: 216px 216px, 144px 144px;
+  background-position: 0 0, 53px 71px;
+  background-repeat: repeat;
 }
 body, h1, h2, p, button { margin: 0; }
 button {
