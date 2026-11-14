@@ -86,7 +86,7 @@ export function App() {
     <header className="masthead">
       <button className="brand-logo" type="button" aria-label={`Simetto Gelato · ${menu.openNavigation}`} title={menu.openNavigation}
         aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
-        <img src={`${import.meta.env.BASE_URL}assets/simetto-logo.png`} width="504" height="370" alt="" draggable="false"/>
+        <img src={`${import.meta.env.BASE_URL}assets/simetto-wordmark.png`} width="2172" height="724" alt="" draggable="false"/>
       </button>
       <div className="header-tools">
         <button type="button" className="language-button" lang={nextLanguage}
@@ -102,7 +102,6 @@ export function App() {
               <circle cx="12" cy="12" r="4.15"/>
               <circle cx="17.5" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
             </svg>
-            <span className="bar-label">Instagram</span>
           </a>
           <a href="https://maps.app.goo.gl/nPuzAu9Ph8iGiARQ7"
             target="_blank" rel="noopener noreferrer" aria-label={menu.maps} title={menu.mapsTitle}>
@@ -110,14 +109,12 @@ export function App() {
               <path d="M19.3 9.6c0 5.1-7.3 11.9-7.3 11.9S4.7 14.7 4.7 9.6a7.3 7.3 0 0 1 14.6 0Z"/>
               <circle cx="12" cy="9.6" r="2.6"/>
             </svg>
-            <span className="bar-label">{menu.location}</span>
           </a>
           <button type="button" aria-label={menu.openNavigation} title={menu.openNavigation}
             aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3 5.5h18M3 12h18M3 18.5h18"/>
             </svg>
-            <span className="bar-label">{menu.menuPage}</span>
           </button>
         </nav>
       </div>
