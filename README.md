@@ -44,6 +44,8 @@ The menu decodes the destination bowl before changing the image, name, notes and
 
 The full menu uses the same paper grain as the homepage while retaining each flavour’s original background colour. Its header is transparent, and the bowl and ring fit below the controls. Flavour tiles have no divider rules or coloured selection fill; bold text identifies the selected flavour, with an outline when navigating by keyboard.
 
+Header logos fit inside a padded box. Homepage controls adapt their contrast over the storefront photo without an opaque bar. About uses the locally hosted Cormorant Garamond typeface. The shared footer keeps the logo and concise navigation columns without repeating the landing headline; its labels live in `src/menuContent.ts` and its typography in `src/home.css`.
+
 The language button shows TR while browsing in English and EN while browsing in Turkish. Tap it to switch languages on the current flavour. First-time visitors see English, and the browser remembers a visitor’s selection for future visits.
 
 ## Editing the menu

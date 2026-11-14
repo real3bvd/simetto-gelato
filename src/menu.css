@@ -18,6 +18,7 @@
   --grain-sizes: 216px 216px, 144px 144px;
   --grain-positions: 0 0, 53px 71px;
   --serif: 'Playfair Display', Georgia, serif;
+  --story-serif: 'Cormorant Garamond', Georgia, serif;
   --ease: cubic-bezier(.22,.76,.23,1);
   --slide-ease: cubic-bezier(.66,.035,.24,1);
   --edge: clamp(24px, 3.9vw, 77px);
@@ -73,14 +74,17 @@ button:focus-visible, .shop-links a:focus-visible, .brand-logo:focus-visible { o
   position: fixed; inset: 0 0 auto; z-index: 4; height: var(--navigation-height);
   padding: env(safe-area-inset-top) var(--edge) 0;
   display: flex; align-items: center; justify-content: space-between;
-  background: rgb(250 250 247 / .97);
+  background: transparent;
   transform: translateY(-100%); opacity: 0; visibility: hidden;
   transition: transform .3s var(--ease), opacity .3s ease, visibility .3s;
 }
 .masthead[data-visible="true"] { transform: translateY(0); opacity: 1; visibility: visible; }
-.masthead[data-menu="true"] { background: transparent; }
-.brand-logo { display: grid; place-items: center; flex: none; width: 126px; height: 100%; }
-.brand-logo img { display: block; width: auto; max-width: 100%; height: calc(100% - 12px); filter: brightness(.29) saturate(.85); }
+.brand-logo { display: flex; align-items: center; justify-content: center; flex: none; width: 126px; height: 100%; padding-block: 8px; }
+.brand-logo img { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; object-fit: contain; filter: brightness(.29) saturate(.85); }
+/* Keep the floating homepage controls legible over the dark storefront photo. */
+.masthead[data-menu="false"] { color: white; mix-blend-mode: difference; }
+.masthead[data-menu="false"] .brand-logo img { filter: brightness(0) invert(1); }
+.masthead[data-menu="false"] .shop-links :is(a, button) { color: inherit; }
 .header-tools { display: flex; align-items: center; gap: clamp(6px, 1.2vw, 20px); }
 .language-button {
   display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;

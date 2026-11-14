@@ -3,6 +3,9 @@ import type { CSSProperties } from 'react'
 import type { Menu } from './menuContent'
 import { shopLinks } from './menuContent'
 import { bowlSource } from './useFlavourMenu'
+import '@fontsource/cormorant-garamond/500.css'
+import '@fontsource/cormorant-garamond/600.css'
+import '@fontsource/cormorant-garamond/400-italic.css'
 import './home.css'
 
 const featuredIds = ['pistachio', 'strawberry', 'chocolate', 'lemon']
@@ -72,15 +75,23 @@ export function SiteFooter({ menu }: { menu: Menu }) {
         <a href="#top" aria-label={menu.backHome}>
           <img src={import.meta.env.BASE_URL + 'assets/simetto-logo.png'} width="504" height="370" alt="Simetto Gelato"/>
         </a>
-        <p>{menu.headlineFirst} {menu.headlineLast}</p>
       </div>
       <nav className="footer-links" aria-label={menu.footerNavigation}>
+        <h2>{menu.footerDiscover}</h2>
         <a href="#about">{menu.aboutLink}</a>
         <a href="#flavour-menu">{menu.allFlavours}</a>
       </nav>
       <div className="footer-links">
+        <h2>{menu.footerFindUs}</h2>
         <a href={shopLinks.maps} target="_blank" rel="noopener noreferrer">{menu.directions}</a>
-        <a href={shopLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label={menu.instagram}>Instagram</a>
+        <a className="footer-instagram" href={shopLinks.instagram} target="_blank" rel="noopener noreferrer" aria-label={menu.instagram}>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"/>
+            <circle cx="12" cy="12" r="4.15"/>
+            <circle cx="17.5" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
+          </svg>
+          <span>Instagram</span>
+        </a>
       </div>
     </div>
     <p className="copyright">© 2026 Simetto Gelato.</p>
