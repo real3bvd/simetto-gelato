@@ -11,7 +11,7 @@ function Cup({ flavour }: { flavour: 'pistachio' | 'strawberry' }) {
     <div className="cup-travel">
       <picture>
         <source type="image/webp" srcSet={`${file}-480.webp 480w, ${file}-960.webp 960w`}
-          sizes="(max-width: 700px) 55vw, (max-width: 1100px) 40vw, 580px"/>
+          sizes="(max-width: 700px) 64vw, (max-width: 1100px) 40vw, 580px"/>
         <img src={file + '.png'} alt="" width={flavour === 'pistachio' ? 1284 : 1266}
           height={flavour === 'pistachio' ? 1225 : 1242} decoding="async" draggable="false"/>
       </picture>
@@ -64,7 +64,7 @@ export function Landing({ menu, onNavVisibility }: { menu: Menu; onNavVisibility
     }
   }, [onNavVisibility])
 
-  return <section ref={hero} className="landing" aria-labelledby="landing-title">
+  return <section id="top" ref={hero} className="landing" aria-labelledby="landing-title">
     <Cup flavour="pistachio"/>
     <Cup flavour="strawberry"/>
     <div className="landing-copy">
@@ -73,7 +73,7 @@ export function Landing({ menu, onNavVisibility }: { menu: Menu; onNavVisibility
       </div>
       <h1 id="landing-title"><span>{menu.headlineFirst}</span>{' '}<span>{menu.headlineLast}</span></h1>
       <p>{menu.landingSubtitle}</p>
-      <a className="discover" href="#flavour-menu">
+      <a className="discover" href="#about">
         {menu.discover}
         <svg aria-hidden="true" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M11 2v16M4.5 12L11 18.5 17.5 12"/>

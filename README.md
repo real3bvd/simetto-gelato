@@ -1,6 +1,6 @@
 # Simetto Gelato
 
-A Simetto Gelato landing page and browse-only menu built with React, TypeScript and Vite. Discover our flavours scrolls from the animated cups into the menu, which opens on Pistachio and continues through all sixteen flavours.
+A Simetto Gelato website built with React, TypeScript and Vite. The homepage introduces the brand with animated cups, a short About section, four featured flavours and a footer. Explore All Flavours opens the separate interactive menu, starting with Pistachio and continuing through all sixteen flavours.
 
 ## Where to edit
 
@@ -8,8 +8,10 @@ A Simetto Gelato landing page and browse-only menu built with React, TypeScript 
 | --- | --- |
 | Page layout, buttons and navigation | [src/App.tsx](src/App.tsx) |
 | Landing headline, cup placement and scroll movement | [src/Landing.tsx](src/Landing.tsx) · [src/landing.css](src/landing.css) |
+| About, featured flavours and footer | [src/HomeContent.tsx](src/HomeContent.tsx) · [src/home.css](src/home.css) |
 | Bowl size, colours, spacing and animations | [src/menu.css](src/menu.css) |
-| Shared cream background, curves and paper grain | [src/menu.css](src/menu.css), starting at `.site-background` |
+| Brand palette, curves and paper grain | [src/menu.css](src/menu.css), starting at `:root` and `.site-background` |
+| Original individual flavour colours and verified social links | [src/menuContent.ts](src/menuContent.ts) |
 | Swipes, keyboard controls and transition timing | [src/useFlavourMenu.ts](src/useFlavourMenu.ts) |
 | Flavour names, descriptions and prices | [English menu and prices](data/flavours.json) · [Turkish translations](data/flavours.tr.json) |
 | English and Turkish interface labels | [src/menuContent.ts](src/menuContent.ts) |
@@ -32,7 +34,9 @@ Open the local address Vite prints in the terminal. To check TypeScript and comp
 
 Choose a named bowl from the scrollable strip at the bottom. Desktop users can browse with the wheel or arrow keys. Home and End select the first and last displayed flavours. On phones, swipe the featured bowl to change flavour or scroll the strip to find one by name.
 
-The navigation appears after scrolling. Its Menu option and the landing page’s Discover button scroll to the interactive menu. Scroll upward to return to the landing page. The cup movement follows the page scroll through a single animation frame update. Reduced-motion preferences show stationary cups and use immediate anchor scrolling.
+The navigation appears after scrolling and stays visible in the full menu. Discover scrolls to About Simetto, followed by the featured flavours. Explore All Flavours, the navigation’s Menu option and the footer’s All Flavours link open the full menu at `#flavour-menu`. The logo returns home; About links return to the introduction. Browser Back and Forward work between these views.
+
+The cup movement follows the page scroll through a single animation frame update. Reduced-motion preferences show stationary cups, reveal content immediately and use immediate anchor scrolling. The homepage uses the blue, ivory and green brand palette; the full menu keeps its original individual flavour backgrounds.
 
 The menu decodes the destination bowl before changing the image, name, notes and counter together. It warms the adjacent images and coalesces rapid navigation to the latest destination. Reduced-motion preferences switch flavours immediately.
 
@@ -50,7 +54,7 @@ The unchanged PNGs live in `public/assets/flavours/`. Full-size WebP delivery im
 
 The supplied transparent landing cups live in `public/assets/landing/`. Their PNG originals are accompanied by 480px and 960px WebP versions for responsive delivery.
 
-The three-line button and the Simetto logo open the site navigation. Menu returns to the selected flavour. About is disabled.
+The three-line button opens the site navigation. Menu returns to the selected flavour, and About opens the homepage introduction. Footer location and Instagram links reuse the URLs supplied by the shop. Privacy and cookie links can be added once real policy content and URLs are supplied; no placeholder legal content is published.
 
 ## Publishing
 

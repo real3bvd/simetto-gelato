@@ -12,6 +12,18 @@ export interface Flavour {
 }
 
 export const languagePreferenceKey = 'simetto-gelato.language'
+export const shopLinks = {
+  instagram: 'https://www.instagram.com/simetto_gelato?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw==',
+  maps: 'https://maps.app.goo.gl/nPuzAu9Ph8iGiARQ7',
+}
+
+export const flavourColours: Record<string, string> = {
+  'clotted-cream': '#c8c6b3', chocolate: '#c3b3a4', 'honey-almond': '#cec4a8',
+  pistachio: '#b2cccc', 'italian-caramel': '#d3bea6', 'lotus-biscuit': '#d0b9a9',
+  mastic: '#bdd0c5', 'tahini-walnut': '#c9c3af', lemon: '#d2d0af',
+  strawberry: '#dec2bd', mojito: '#b9cec1', cherry: '#d3b9bc',
+  blackberry: '#c6bdcf', fig: '#cfc2c5', melon: '#c5cdb4', sorrel: '#b5c8b8',
+}
 
 export function initialLanguage(): Language {
   try {
@@ -39,6 +51,15 @@ export const menus = {
     headlineLast: 'Gelato.',
     landingSubtitle: '16 flavours. One delicious experience.',
     discover: 'Discover our flavours',
+    aboutTitle: 'About Simetto',
+    aboutText: 'Sixteen flavours to discover, one delicious experience. From Pistachio to Strawberry, find your favourite in the Simetto Gelato menu.',
+    featuredTitle: 'Featured flavours',
+    exploreAll: 'Explore All Flavours',
+    backHome: 'Simetto Gelato home',
+    footerNavigation: 'Footer navigation',
+    aboutLink: 'About Us',
+    allFlavours: 'All Flavours',
+    directions: 'Find us on Google Maps',
     switchToLanguage: 'Switch to English',
     shopLinks: 'Shop and menu',
     instagram: 'Simetto Gelato on Instagram (opens in a new tab)',
@@ -65,6 +86,15 @@ export const menus = {
     headlineLast: 'Sanatı.',
     landingSubtitle: '16 çeşit. Tek bir lezzet deneyimi.',
     discover: 'Çeşitlerimizi keşfet',
+    aboutTitle: 'Simetto Hakkında',
+    aboutText: 'Keşfedilecek on altı çeşit, tek bir lezzet deneyimi. Antep Fıstığı’ndan Çilek’e, Simetto Gelato menüsünde favorinizi bulun.',
+    featuredTitle: 'Öne çıkan lezzetler',
+    exploreAll: 'Tüm Çeşitleri Keşfet',
+    backHome: 'Simetto Gelato ana sayfa',
+    footerNavigation: 'Alt menü',
+    aboutLink: 'Hakkımızda',
+    allFlavours: 'Tüm Çeşitler',
+    directions: 'Google Haritalar’da bizi bulun',
     switchToLanguage: 'Türkçeye geç',
     shopLinks: 'Mağaza ve menü',
     instagram: 'Instagram’da Simetto Gelato (yeni sekmede açılır)',

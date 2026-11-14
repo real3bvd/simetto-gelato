@@ -1,9 +1,10 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
-import { initialLanguage, languagePreferenceKey, menus } from './menuContent'
+import { flavourColours, initialLanguage, languagePreferenceKey, menus, shopLinks } from './menuContent'
 import type { Flavour, Language, Menu } from './menuContent'
 import { bowlSource, MENU_TRANSITION_MS, useFlavourMenu } from './useFlavourMenu'
 import { Landing } from './Landing'
+import { HomeContent, SiteFooter } from './HomeContent'
 
 const number = (index: number) => String(index + 1).padStart(2, '0')
 
@@ -58,7 +59,20 @@ export function App() {
   const flavours = menu.flavours
   const { index, previousIndex, direction, select, menuRef, surfaceProps } = useFlavourMenu(menus.en.flavours)
   const [navVisible, setNavVisible] = useState(false)
+  const [fullMenu, setFullMenu] = useState(() => window.location.hash === '#flavour-menu')
   const dialog = useRef<HTMLDialogElement>(null)
+  useLayoutEffect(() => {
+    const onHashChange = () => setFullMenu(window.location.hash === '#flavour-menu')
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+  useLayoutEffect(() => {
+    const id = window.location.hash.slice(1) || 'top'
+    const destination = document.getElementById(id)
+    destination?.scrollIntoView({ behavior: 'instant', block: 'start' })
+    if (fullMenu) destination?.focus({ preventScroll: true })
+    setNavVisible(window.scrollY > 24)
+  }, [fullMenu])
   useLayoutEffect(() => {
     document.documentElement.lang = language
     document.title = menu.title
@@ -81,11 +95,10 @@ export function App() {
     <div className="site-background" aria-hidden="true">
       <div className="background-curves"/>
     </div>
-    <header className="masthead" data-visible={navVisible} inert={!navVisible}>
-      <button className="brand-logo" type="button" aria-label={`Simetto Gelato · ${menu.openNavigation}`} title={menu.openNavigation}
-        aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
+    <header className="masthead" data-visible={fullMenu || navVisible} inert={!fullMenu && !navVisible}>
+      <a className="brand-logo" href="#top" aria-label={menu.backHome} title={menu.backHome}>
         <img src={`${import.meta.env.BASE_URL}assets/simetto-logo.png`} width="504" height="370" alt="" draggable="false"/>
-      </button>
+      </a>
       <div className="header-tools">
         <button type="button" className="language-button" lang={nextLanguage}
           aria-label={`${nextLanguage.toUpperCase()} · ${menus[nextLanguage].switchToLanguage}`}
@@ -93,7 +106,7 @@ export function App() {
           {nextLanguage.toUpperCase()}
         </button>
         <nav className="shop-links" aria-label={menu.shopLinks}>
-          <a href="https://www.instagram.com/simetto_gelato?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw=="
+          <a href={shopLinks.instagram}
             target="_blank" rel="noopener noreferrer" aria-label={menu.instagram} title="Instagram">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="3" y="3" width="18" height="18" rx="5"/>
@@ -101,7 +114,7 @@ export function App() {
               <circle cx="17.5" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
             </svg>
           </a>
-          <a href="https://maps.app.goo.gl/nPuzAu9Ph8iGiARQ7"
+          <a href={shopLinks.maps}
             target="_blank" rel="noopener noreferrer" aria-label={menu.maps} title={menu.mapsTitle}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M19.3 9.6c0 5.1-7.3 11.9-7.3 11.9S4.7 14.7 4.7 9.6a7.3 7.3 0 0 1 14.6 0Z"/>
@@ -118,12 +131,12 @@ export function App() {
       </div>
     </header>
     <main>
-      <Landing menu={menu} onNavVisibility={setNavVisible}/>
+      {fullMenu ?
       <section id="flavour-menu" className="menu" aria-label={menu.mainLabel} tabIndex={-1}
         ref={menuRef} style={style} {...surfaceProps}>
         <section className="visual" aria-label={menu.bowl(current.name)}>
           {frames.map(i => <div key={flavours[i].id} className={`scene ${layerState(i)}`}
-            aria-hidden={i !== index}>
+            aria-hidden={i !== index} style={{ backgroundColor: flavourColours[flavours[i].id] }}>
             <div className="plate-stage">
               <div className="drag-surface">
                 <img className="bowl" src={bowlSource(flavours[i])} width="1254" height="1254"
@@ -153,18 +166,18 @@ export function App() {
         <Selector menu={menu} index={index} select={select}/>
         <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">{current.name}, {menu.position(index + 1, flavours.length)}</span>
       </section>
+      : <>
+        <Landing menu={menu} onNavVisibility={setNavVisible}/>
+        <HomeContent menu={menu}/>
+      </>}
     </main>
+    <SiteFooter menu={menu}/>
     <dialog id="site-navigation" ref={dialog} className="site-navigation" aria-label={menu.navigation}
       onClick={event => { if (event.target === event.currentTarget) event.currentTarget.close() }}>
-      <form method="dialog" onSubmit={event => {
-        event.preventDefault()
-        dialog.current?.close()
-        menuRef.current?.focus({ preventScroll: true })
-        menuRef.current?.scrollIntoView({ block: 'start' })
-      }}>
-        <button type="submit" autoFocus>{menu.menuPage}</button>
-        <button type="button" disabled>{menu.aboutPage}</button>
-      </form>
+      <nav className="site-menu-links">
+        <a href="#flavour-menu" autoFocus onClick={() => dialog.current?.close()}>{menu.menuPage}</a>
+        <a href="#about" onClick={() => dialog.current?.close()}>{menu.aboutPage}</a>
+      </nav>
     </dialog>
   </>
 }
