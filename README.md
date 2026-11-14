@@ -42,6 +42,8 @@ The cup movement follows the page scroll through a single animation frame update
 
 The menu decodes the destination bowl before changing the image, name, notes and counter together. It warms the adjacent images and coalesces rapid navigation to the latest destination. Reduced-motion preferences switch flavours immediately.
 
+The full menu uses the same paper grain as the homepage while retaining each flavour’s original background colour. Its header is transparent, and the bowl and ring fit below the controls. Flavour tiles have no divider rules or coloured selection fill; bold text identifies the selected flavour, with an outline when navigating by keyboard.
+
 The language button shows TR while browsing in English and EN while browsing in Turkish. Tap it to switch languages on the current flavour. First-time visitors see English, and the browser remembers a visitor’s selection for future visits.
 
 ## Editing the menu

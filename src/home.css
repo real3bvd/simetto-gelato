@@ -47,7 +47,7 @@
 .footer-links a { color: var(--forest-green); text-underline-offset: 5px; text-decoration-color: transparent; font-size: 14px; line-height: 1.5; }
 .footer-links a:hover { text-decoration-color: currentColor; }
 .site-footer a:focus-visible { outline: 2px solid var(--muted-teal); outline-offset: 4px; }
-.copyright { border-top: 1px solid rgb(86 140 150 / .3); padding-top: 18px; color: var(--readable-teal); font-size: 12px; }
+.copyright { padding-top: 18px; color: var(--readable-teal); font-size: 12px; }
 
 @media (max-width: 760px) {
   .about-section { padding: 82px 7vw 52px; }

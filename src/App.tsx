@@ -95,7 +95,7 @@ export function App() {
     <div className="site-background" aria-hidden="true">
       <div className="background-curves"/>
     </div>
-    <header className="masthead" data-visible={fullMenu || navVisible} inert={!fullMenu && !navVisible}>
+    <header className="masthead" data-menu={fullMenu} data-visible={fullMenu || navVisible} inert={!fullMenu && !navVisible}>
       <a className="brand-logo" href="#top" aria-label={menu.backHome} title={menu.backHome}>
         <img src={`${import.meta.env.BASE_URL}assets/simetto-logo.png`} width="504" height="370" alt="" draggable="false"/>
       </a>
