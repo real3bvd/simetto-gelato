@@ -9,7 +9,6 @@
   --ease: cubic-bezier(.22,.76,.23,1);
   --slide-ease: cubic-bezier(.66,.035,.24,1);
   --edge: clamp(24px, 3.9vw, 77px);
-  --bar-height: calc(clamp(76px, 8.8svh, 104px) + env(safe-area-inset-top));
   color: var(--ink);
   background: var(--paper);
 }
@@ -24,24 +23,16 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .menu {
   position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 52fr) minmax(0, 48fr);
-  grid-template-rows: minmax(405px, 1fr) auto; min-height: calc(100svh - var(--bar-height));
+  grid-template-rows: minmax(405px, 1fr) auto; min-height: 100svh;
 }
 .masthead {
-  position: sticky; top: 0; z-index: 4; height: var(--bar-height);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: env(safe-area-inset-top) var(--edge) 0;
-  background: #fbfaf6; border-bottom: 1px solid #c8cfc3;
+  grid-area: 1 / 1 / -1 / -1; align-self: start; position: sticky; top: 0; z-index: 4;
+  padding: clamp(17px, 3.3svh, 36px) var(--edge) 0;
+  display: flex; align-items: flex-start; justify-content: space-between; pointer-events: none;
 }
-.brand-logo {
-  position: relative; width: clamp(114px, 22vw, 212px); min-width: 0;
-  height: calc(100% - 12px); margin-right: 8px; overflow: hidden;
-}
-/* Frame the transparent margins of the supplied wordmark inside its button. */
-.brand-logo img {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
-  transform: translateY(-3%) scale(1.28);
-}
-.header-tools { display: flex; flex: none; align-items: center; gap: clamp(6px, 1.2vw, 20px); }
+.brand-logo { display: block; width: clamp(102px, 8.4vw, 138px); pointer-events: auto; }
+.brand-logo img { display: block; width: 100%; height: auto; filter: brightness(.29) saturate(.85); }
+.header-tools { display: flex; align-items: center; gap: clamp(6px, 1.2vw, 20px); }
 .language-button {
   display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
   pointer-events: auto; font-size: 13px; font-weight: 500; letter-spacing: .08em;
@@ -120,7 +111,7 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
 
 .details {
   grid-area: 1 / 2; display: grid; align-items: center; position: relative; overflow: hidden; min-width: 0;
-  padding: clamp(28px, 5svh, 56px) clamp(32px, 4.8vw, 110px); background: var(--paper); touch-action: pan-y pinch-zoom;
+  padding: 100px clamp(32px, 4.8vw, 110px) 54px; background: var(--paper); touch-action: pan-y pinch-zoom;
 }
 .tasting-note { width: min(100%, 610px); justify-self: center; }
 .menu-label { display: flex; align-items: center; gap: 16px; color: #506258; }
@@ -156,7 +147,7 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
 }
 
 .site-navigation {
-  position: fixed; inset: calc(var(--bar-height) + 4px) var(--edge) auto auto;
+  position: fixed; inset: calc(clamp(17px, 3.3svh, 36px) + 48px) var(--edge) auto auto;
   width: min(235px, calc(100% - 32px)); margin: 0; padding: 0;
   border: 1px solid #bac3b7; border-radius: 5px; color: var(--ink); background: var(--paper);
   box-shadow: 0 8px 24px rgb(26 45 38 / .12);
@@ -175,12 +166,15 @@ button:focus-visible, .shop-links a:focus-visible { outline: 2px solid #355b68; 
 body:has(.site-navigation[open]) { overflow: hidden; }
 
 @media (max-width: 760px) and (min-height: 501px), (max-width: 1024px) and (max-aspect-ratio: 4/5), (max-width: 529px) {
-  :root { --bar-height: calc(clamp(62px, 8.6svh, 84px) + env(safe-area-inset-top)); --edge: 5vw; }
   .menu {
-    --picture-height: clamp(195px, calc(53svh - var(--bar-height) * .6), 620px);
+    --picture-height: clamp(225px, 53svh, 660px);
+    --bowl-top-space: clamp(58px, 8svh, 86px);
     grid-template-columns: minmax(0, 1fr); grid-template-rows: var(--picture-height) 1fr auto;
   }
-  .plate-stage { --plate-size: min(83vw, calc(var(--picture-height) - 28px), 540px); }
+  .masthead { padding: max(12px, env(safe-area-inset-top)) 5vw 0; }
+  .brand-logo { width: clamp(83px, 23vw, 122px); }
+  .scene { padding-block: var(--bowl-top-space) 18px; }
+  .plate-stage { --plate-size: min(83vw, calc(var(--picture-height) - var(--bowl-top-space) - 25px), 540px); }
   .details { grid-area: 2 / 1; padding: clamp(21px, 3.3svh, 40px) 7vw; }
   .menu-label { gap: 12px; }
   .menu-label > :first-child { font-size: 10px; }
@@ -193,14 +187,16 @@ body:has(.site-navigation[open]) { overflow: hidden; }
   .thumb span { font-size: clamp(14px, 3.4vw, 18px); text-wrap: balance; }
 }
 @media (max-width: 375px) {
-  :root { --edge: 12px; }
+  .masthead { padding-inline: 12px; }
+  .brand-logo { width: clamp(72px, 21vw, 79px); }
   .header-tools { gap: 4px; }
   .shop-links { gap: 0; }
   .shop-links button { margin-left: 4px; }
   .shop-links button::before { left: -2px; }
 }
 @media (max-width: 529px) and (max-height: 665px) {
-  .menu { --picture-height: max(180px, calc(48svh - var(--bar-height) * .7)); }
+  .menu { --picture-height: max(210px, 48svh); --bowl-top-space: 44px; }
+  .brand-logo { width: 72px; }
   .details { padding-block: 17px; }
   .flavour-copy h1 { margin: 9px 0; font-size: clamp(35px, 10vw, 44px); }
   .flavour-copy p { font-size: 14px; }
@@ -208,11 +204,11 @@ body:has(.site-navigation[open]) { overflow: hidden; }
   .thumb img { width: 41px; }
 }
 @media (min-width: 530px) and (max-height: 500px) and (orientation: landscape) {
-  :root { --bar-height: calc(52px + env(safe-area-inset-top)); --edge: 16px; }
   .menu { grid-template-rows: minmax(223px, 1fr) auto; }
-  .brand-logo { height: 44px; }
+  .masthead { padding: 6px 16px 0; }
+  .brand-logo { width: 63px; }
   .plate-stage { --plate-size: min(65%, 56svh); }
-  .details { padding: 12px 4vw; }
+  .details { padding: 53px 4vw 12px; }
   .menu-label > :first-child, .counter { font-size: 10px; }
   .flavour-copy h1 { font-size: clamp(29px, 4.5vw, 48px); margin: 10px 0; }
   .flavour-copy p { font-size: 14px; line-height: 1.4; }
