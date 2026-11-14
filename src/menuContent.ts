@@ -53,7 +53,7 @@ export const menus = {
     aboutTitle: 'About Simetto',
     aboutIntro: 'A little pause. A lasting taste.',
     aboutParagraphs: [
-      'At Simetto, gelato is an invitation to take a little time for yourself. The first spoonful, the pause between conversations, the familiar flavour you come back to: small things can make an ordinary day feel a little sweeter.',
+      'At Simetto, gelato is an invitation to take a little time for yourself. Whether it’s your first spoonful, a pause between conversations, or a return to your favourite flavour, small moments can make an ordinary day feel a little sweeter.',
       'Explore sixteen flavours, from the mellow, nutty character of Pistachio and the richness of Chocolate to bright Lemon and playful Strawberry. Stay with a favourite or discover a different side of the menu. There is pleasure in both the comfort of something familiar and the surprise of a new taste.',
       'Enjoy it on a gentle walk, share a moment with someone, or make a quiet stop just for you. However you choose your flavour, we hope Simetto becomes part of the moments you look forward to.',
     ],

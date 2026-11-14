@@ -69,7 +69,7 @@
 @media (max-width: 700px) and (orientation: portrait) {
   .landing {
     --headline-size: clamp(54px, 12vw, 74px);
-    --pistachio-width: min(64vw, 35svh);
+    --pistachio-width: min(70vw, 38svh);
     min-height: max(530px, 100svh); padding: 75px 18px;
   }
   .landing-copy h1 { margin-top: 20px; }
@@ -81,25 +81,25 @@
     left: -7vw; top: 84%; --tilt: 14deg; --travel-y: 12svh;
   }
   .landing-cup.strawberry {
-    right: -7vw; top: 16%; width: min(60vw, 33svh); --tilt: -15deg; --travel-y: 18svh;
+    right: -7vw; top: 16%; width: min(66vw, 36svh); --tilt: -15deg; --travel-y: 18svh;
   }
 }
 @media (orientation: landscape) and (max-height: 540px) {
   .landing {
     --headline-size: clamp(42px, 11.5svh, 60px);
-    --pistachio-width: min(36vw, 69svh);
+    --pistachio-width: min(39vw, 74svh);
     min-height: max(310px, 100svh); padding: 20px;
   }
   .landing-signature img { width: 86px; }
   .landing-copy h1 { margin-top: 12px; }
   .landing-copy p { margin: 12px 0 0; font-size: 15px; }
   .discover { min-height: 42px; padding: 8px 18px; }
-  .landing-cup.strawberry { width: min(36vw, 69svh); }
+  .landing-cup.strawberry { width: min(39vw, 74svh); }
 }
 @media (max-width: 700px) and (max-height: 665px) and (orientation: portrait) {
-  .landing { --pistachio-width: min(58vw, 28svh); }
+  .landing { --pistachio-width: min(64vw, 30svh); }
   .landing-cup.pistachio { top: 86%; }
-  .landing-cup.strawberry { top: 15%; width: min(53vw, 28svh); }
+  .landing-cup.strawberry { top: 15%; width: min(58vw, 30svh); }
 }
 @media (min-width: 1100px) {
   .landing { --headline-size: clamp(76px, 7.2vw, 138px); }

@@ -11,7 +11,7 @@ function Cup({ flavour }: { flavour: 'pistachio' | 'strawberry' }) {
     <div className="cup-travel">
       <picture>
         <source type="image/webp" srcSet={`${file}-480.webp 480w, ${file}-960.webp 960w`}
-          sizes="(max-width: 700px) 64vw, (max-width: 1100px) 40vw, 580px"/>
+          sizes="(max-width: 700px) 70vw, (max-width: 1100px) 40vw, 580px"/>
         <img src={file + '.png'} alt="" width={flavour === 'pistachio' ? 1284 : 1266}
           height={flavour === 'pistachio' ? 1225 : 1242} decoding="async" draggable="false"/>
       </picture>
