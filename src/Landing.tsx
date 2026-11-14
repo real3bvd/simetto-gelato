@@ -73,12 +73,6 @@ export function Landing({ menu, onNavVisibility }: { menu: Menu; onNavVisibility
       </div>
       <h1 id="landing-title"><span>{menu.headlineFirst}</span>{' '}<span>{menu.headlineLast}</span></h1>
       <p>{menu.landingSubtitle}</p>
-      <a className="discover" href="#about">
-        {menu.discover}
-        <svg aria-hidden="true" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M11 2v16M4.5 12L11 18.5 17.5 12"/>
-        </svg>
-      </a>
     </div>
   </section>
 }

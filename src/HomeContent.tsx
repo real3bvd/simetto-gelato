@@ -31,9 +31,20 @@ export function HomeContent({ menu }: { menu: Menu }) {
 
   return <div ref={content} className="home-content">
     <section id="about" className="about-section" aria-labelledby="about-title">
-      <div className="about-copy reveal">
-        <h2 id="about-title">{menu.aboutTitle}</h2>
-        <p>{menu.aboutText}</p>
+      <div className="about-layout">
+        <figure className="about-photo reveal">
+          <img src={import.meta.env.BASE_URL + 'assets/simetto-storefront.jpeg'}
+            width="1170" height="1450" alt={menu.aboutPhotoAlt} loading="lazy" decoding="async"/>
+        </figure>
+        <div className="about-copy">
+          <div className="about-heading reveal">
+            <h2 id="about-title">{menu.aboutTitle}</h2>
+            <p className="about-intro">{menu.aboutIntro}</p>
+          </div>
+          <div className="about-story reveal">
+            {menu.aboutParagraphs.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+        </div>
       </div>
     </section>
     <section id="featured-flavours" className="featured-section" aria-labelledby="featured-title">

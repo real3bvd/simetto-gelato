@@ -1,6 +1,6 @@
 # Simetto Gelato
 
-A Simetto Gelato website built with React, TypeScript and Vite. The homepage introduces the brand with animated cups, a short About section, four featured flavours and a footer. Explore All Flavours opens the separate interactive menu, starting with Pistachio and continuing through all sixteen flavours.
+A Simetto Gelato website built with React, TypeScript and Vite. The homepage introduces the brand with animated cups, an About story with a storefront photograph, four featured flavours and a footer. Explore All Flavours opens the separate interactive menu, starting with Pistachio and continuing through all sixteen flavours.
 
 ## Where to edit
 
@@ -9,6 +9,8 @@ A Simetto Gelato website built with React, TypeScript and Vite. The homepage int
 | Page layout, buttons and navigation | [src/App.tsx](src/App.tsx) |
 | Landing headline, cup placement and scroll movement | [src/Landing.tsx](src/Landing.tsx) · [src/landing.css](src/landing.css) |
 | About, featured flavours and footer | [src/HomeContent.tsx](src/HomeContent.tsx) · [src/home.css](src/home.css) |
+| About story in English and Turkish | [src/menuContent.ts](src/menuContent.ts), under `aboutIntro` and `aboutParagraphs` |
+| Storefront photograph | [public/assets/simetto-storefront.jpeg](public/assets/simetto-storefront.jpeg) |
 | Bowl size, colours, spacing and animations | [src/menu.css](src/menu.css) |
 | Brand palette, curves and paper grain | [src/menu.css](src/menu.css), starting at `:root` and `.site-background` |
 | Original individual flavour colours and verified social links | [src/menuContent.ts](src/menuContent.ts) |
@@ -34,7 +36,7 @@ Open the local address Vite prints in the terminal. To check TypeScript and comp
 
 Choose a named bowl from the scrollable strip at the bottom. Desktop users can browse with the wheel or arrow keys. Home and End select the first and last displayed flavours. On phones, swipe the featured bowl to change flavour or scroll the strip to find one by name.
 
-The navigation appears after scrolling and stays visible in the full menu. Discover scrolls to About Simetto, followed by the featured flavours. Explore All Flavours, the navigation’s Menu option and the footer’s All Flavours link open the full menu at `#flavour-menu`. The logo returns home; About links return to the introduction. Browser Back and Forward work between these views.
+The navigation appears after scrolling and stays visible in the full menu. Scroll beyond the landing page to read About Simetto and see the featured flavours. Explore All Flavours, the navigation’s Menu option and the footer’s All Flavours link open the full menu at `#flavour-menu`. The logo returns home; About links return to the introduction. Browser Back and Forward work between these views.
 
 The cup movement follows the page scroll through a single animation frame update. Reduced-motion preferences show stationary cups, reveal content immediately and use immediate anchor scrolling. The homepage uses the blue, ivory and green brand palette; the full menu keeps its original individual flavour backgrounds.
 

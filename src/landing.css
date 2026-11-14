@@ -25,7 +25,7 @@
 .landing-copy p {
   position: relative; z-index: 3;
   color: var(--readable-teal);
-  margin: clamp(22px, 3.4svh, 37px) 0 clamp(28px, 4.5svh, 52px);
+  margin: clamp(22px, 3.4svh, 37px) 0 0;
   font: italic 400 clamp(17px, 1.45vw, 26px)/1.4 var(--serif);
 }
 .discover {
@@ -36,7 +36,6 @@
   font-size: clamp(11px, .84vw, 14px); letter-spacing: .15em; text-transform: uppercase;
   transition: background-color .25s ease, color .25s ease;
 }
-.discover svg { width: 18px; height: 18px; }
 .discover:focus-visible { outline: 2px solid var(--muted-teal); outline-offset: 4px; }
 @media (hover: hover) {
   .discover:hover { background: var(--forest-green); color: var(--warm-white); }
@@ -77,7 +76,7 @@
     min-height: max(530px, 100svh); padding: 75px 18px;
   }
   .landing-copy h1 { margin-top: 20px; }
-  .landing-copy p { margin: 20px 0 24px; font-size: clamp(15px, 3.6vw, 19px); }
+  .landing-copy p { margin: 20px 0 0; font-size: clamp(15px, 3.6vw, 19px); }
   .landing-signature { gap: 13px; }
   .landing-signature img { width: clamp(88px, 23vw, 118px); }
   .discover { min-height: 46px; padding: 12px 20px; gap: 15px; font-size: 10px; }
@@ -96,7 +95,7 @@
   }
   .landing-signature img { width: 68px; }
   .landing-copy h1 { margin-top: 12px; }
-  .landing-copy p { margin: 12px 0 16px; font-size: 15px; }
+  .landing-copy p { margin: 12px 0 0; font-size: 15px; }
   .discover { min-height: 42px; padding: 8px 18px; }
   .landing-cup.strawberry { width: min(36vw, 69svh); }
 }
