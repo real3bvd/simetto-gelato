@@ -1,5 +1,7 @@
 .landing {
   --cup-progress: 0;
+  --headline-size: clamp(64px, 6.6vw, 128px);
+  --pistachio-width: clamp(272px, 39vw, 660px);
   position: relative;
   isolation: isolate;
   display: grid;
@@ -45,22 +47,22 @@
 .landing-signature::before, .landing-signature::after {
   content: ''; width: clamp(24px, 3vw, 52px); height: 1px; background: rgb(57 79 67 / .36);
 }
-.landing-signature img { width: clamp(64px, 6.8vw, 100px); height: auto; filter: brightness(.29) saturate(.85); }
+.landing-signature img { width: clamp(104px, 10vw, 164px); height: auto; filter: brightness(.29) saturate(.85); }
 .landing-copy h1 {
   margin: clamp(24px, 4svh, 52px) 0 0;
-  font: italic 400 clamp(72px, 7.8vw, 150px)/.96 var(--serif);
+  font: italic 400 var(--headline-size)/.96 var(--serif);
   letter-spacing: -.064em;
 }
 .landing-copy h1 span { display: block; }
 .landing-copy p {
   margin: clamp(22px, 3.4svh, 37px) 0 clamp(28px, 4.5svh, 52px);
-  font: italic 400 clamp(18px, 1.65vw, 31px)/1.4 var(--serif);
+  font: italic 400 clamp(17px, 1.45vw, 26px)/1.4 var(--serif);
 }
 .discover {
   min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 22px;
   padding: 12px clamp(22px, 2.5vw, 48px); border: 1px solid currentColor; border-radius: 99px;
   background: #f5f1e9; color: inherit; text-decoration: none;
-  font-size: clamp(11px, .92vw, 15px); letter-spacing: .15em; text-transform: uppercase;
+  font-size: clamp(11px, .84vw, 14px); letter-spacing: .15em; text-transform: uppercase;
   transition: background-color .25s ease, color .25s ease;
 }
 .discover svg { width: 18px; height: 18px; }
@@ -69,12 +71,13 @@
   .discover:hover { background: #214337; color: #fffaf0; }
 }
 .landing-cup {
-  position: absolute; pointer-events: none; user-select: none;
-  width: clamp(272px, 39vw, 660px);
+  position: absolute; z-index: 2; pointer-events: none; user-select: none;
+  width: var(--pistachio-width);
 }
 .landing-cup.pistachio {
   --tilt: 12deg; --arrival-x: -26px; --travel-x: -11vw; --travel-y: 24svh; --turn: -5deg;
-  left: -4.8vw; top: 66%; transform: translateY(-50%);
+  left: calc(50% - var(--headline-size) * 1.64 - var(--pistachio-width) * .8);
+  top: 54%; transform: translateY(-50%);
 }
 .landing-cup.strawberry {
   --tilt: -14deg; --arrival-x: 28px; --travel-x: 9vw; --travel-y: 18svh; --turn: 4deg;
@@ -83,24 +86,27 @@
 .cup-travel {
   transform: translate3d(calc(var(--travel-x) * var(--cup-progress)), calc(var(--travel-y) * var(--cup-progress)), 0)
     rotate(calc(var(--tilt) + var(--turn) * var(--cup-progress)));
-  opacity: clamp(0, calc(1.6 - var(--cup-progress) * 2.5), 1);
 }
 .landing-cup picture { display: block; animation: cup-arrives 950ms cubic-bezier(.18,.62,.22,1) both; }
 .landing-cup.strawberry picture { animation-delay: 65ms; }
 .landing-cup img { display: block; width: 100%; height: auto; }
 @keyframes cup-arrives {
-  from { opacity: 0; transform: translate3d(var(--arrival-x), 28px, 0) rotate(calc(var(--tilt) * -.38)); }
-  to { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); }
+  from { transform: translate3d(var(--arrival-x), 28px, 0) rotate(calc(var(--tilt) * -.38)); }
+  to { transform: translate3d(0, 0, 0) rotate(0); }
 }
 @media (max-width: 700px) and (orientation: portrait) {
-  .landing { min-height: max(530px, 100svh); padding: 75px 18px; }
-  .landing-copy h1 { font-size: clamp(60px, 14vw, 86px); margin-top: 20px; }
-  .landing-copy p { margin: 20px 0 24px; font-size: clamp(16px, 3.9vw, 21px); }
+  .landing {
+    --headline-size: clamp(54px, 12vw, 74px);
+    --pistachio-width: min(53vw, 27svh);
+    min-height: max(530px, 100svh); padding: 75px 18px;
+  }
+  .landing-copy h1 { margin-top: 20px; }
+  .landing-copy p { margin: 20px 0 24px; font-size: clamp(15px, 3.6vw, 19px); }
   .landing-signature { gap: 13px; }
-  .landing-signature img { width: clamp(56px, 13vw, 76px); }
+  .landing-signature img { width: clamp(88px, 23vw, 118px); }
   .discover { min-height: 46px; padding: 12px 20px; gap: 15px; font-size: 10px; }
   .landing-cup.pistachio {
-    left: -7vw; top: 84%; width: min(59vw, 32svh); --tilt: 14deg; --travel-y: 12svh;
+    top: 50%; --tilt: 14deg; --travel-y: 12svh;
   }
   .landing-cup.strawberry {
     right: -7vw; top: 16%; width: min(55vw, 30svh); --tilt: -15deg; --travel-y: 18svh;
@@ -108,15 +114,19 @@
   .landing-orbit { width: 143%; height: 91%; transform: rotate(21deg); }
 }
 @media (orientation: landscape) and (max-height: 540px) {
-  .landing { min-height: max(310px, 100svh); padding: 20px; }
-  .landing-signature img { width: 52px; }
-  .landing-copy h1 { margin-top: 12px; font-size: clamp(46px, 13svh, 68px); }
-  .landing-copy p { margin: 12px 0 16px; font-size: 16px; }
+  .landing {
+    --headline-size: clamp(42px, 11.5svh, 60px);
+    --pistachio-width: min(36vw, 69svh);
+    min-height: max(310px, 100svh); padding: 20px;
+  }
+  .landing-signature img { width: 68px; }
+  .landing-copy h1 { margin-top: 12px; }
+  .landing-copy p { margin: 12px 0 16px; font-size: 15px; }
   .discover { min-height: 42px; padding: 8px 18px; }
-  .landing-cup.pistachio, .landing-cup.strawberry { width: min(36vw, 69svh); }
+  .landing-cup.strawberry { width: min(36vw, 69svh); }
 }
 @media (max-width: 700px) and (max-height: 665px) and (orientation: portrait) {
-  .landing-cup.pistachio { top: 86%; width: min(53vw, 26svh); }
+  .landing { --pistachio-width: min(53vw, 26svh); }
   .landing-cup.strawberry { top: 15%; width: min(48vw, 26svh); }
 }
 @media (prefers-reduced-motion: reduce) {
