@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react'
 import { initialLanguage, languagePreferenceKey, menus } from './menuContent'
 import type { Flavour, Language, Menu } from './menuContent'
 import { bowlSource, MENU_TRANSITION_MS, useFlavourMenu } from './useFlavourMenu'
+import { Landing } from './Landing'
 
 const number = (index: number) => String(index + 1).padStart(2, '0')
 const colours: Record<string, string> = {
@@ -62,7 +63,8 @@ export function App() {
   const nextLanguage = language === 'en' ? 'tr' : 'en'
   const menu = menus[language]
   const flavours = menu.flavours
-  const { index, previousIndex, direction, select, surfaceProps } = useFlavourMenu(menus.en.flavours)
+  const { index, previousIndex, direction, select, menuRef, surfaceProps } = useFlavourMenu(menus.en.flavours)
+  const [navVisible, setNavVisible] = useState(false)
   const dialog = useRef<HTMLDialogElement>(null)
   useLayoutEffect(() => {
     document.documentElement.lang = language
@@ -83,79 +85,87 @@ export function App() {
   const layerState = (i: number) => i !== index ? 'outgoing' : previousIndex === null ? 'settled' : 'incoming'
 
   return <>
-    <main className="menu" aria-label={menu.mainLabel} style={style} {...surfaceProps}>
-      <header className="masthead">
-        <button className="brand-logo" type="button" aria-label={`Simetto Gelato · ${menu.openNavigation}`} title={menu.openNavigation}
-          aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
-          <img src={`${import.meta.env.BASE_URL}assets/simetto-logo.png`} width="504" height="370" alt="" draggable="false"/>
+    <header className="masthead" data-visible={navVisible} inert={!navVisible}>
+      <button className="brand-logo" type="button" aria-label={`Simetto Gelato · ${menu.openNavigation}`} title={menu.openNavigation}
+        aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
+        <img src={`${import.meta.env.BASE_URL}assets/simetto-logo.png`} width="504" height="370" alt="" draggable="false"/>
+      </button>
+      <div className="header-tools">
+        <button type="button" className="language-button" lang={nextLanguage}
+          aria-label={`${nextLanguage.toUpperCase()} · ${menus[nextLanguage].switchToLanguage}`}
+          title={menus[nextLanguage].switchToLanguage} onClick={changeLanguage}>
+          {nextLanguage.toUpperCase()}
         </button>
-        <div className="header-tools">
-          <button type="button" className="language-button" lang={nextLanguage}
-            aria-label={`${nextLanguage.toUpperCase()} · ${menus[nextLanguage].switchToLanguage}`}
-            title={menus[nextLanguage].switchToLanguage} onClick={changeLanguage}>
-            {nextLanguage.toUpperCase()}
+        <nav className="shop-links" aria-label={menu.shopLinks}>
+          <a href="https://www.instagram.com/simetto_gelato?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw=="
+            target="_blank" rel="noopener noreferrer" aria-label={menu.instagram} title="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4.15"/>
+              <circle cx="17.5" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://maps.app.goo.gl/nPuzAu9Ph8iGiARQ7"
+            target="_blank" rel="noopener noreferrer" aria-label={menu.maps} title={menu.mapsTitle}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19.3 9.6c0 5.1-7.3 11.9-7.3 11.9S4.7 14.7 4.7 9.6a7.3 7.3 0 0 1 14.6 0Z"/>
+              <circle cx="12" cy="9.6" r="2.6"/>
+            </svg>
+          </a>
+          <button type="button" aria-label={menu.openNavigation} title={menu.openNavigation}
+            aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 5.5h18M3 12h18M3 18.5h18"/>
+            </svg>
           </button>
-          <nav className="shop-links" aria-label={menu.shopLinks}>
-            <a href="https://www.instagram.com/simetto_gelato?utm_source=ig_web_button_share_sheet&vrfl=ZDNlZDc0MzIxNw=="
-              target="_blank" rel="noopener noreferrer" aria-label={menu.instagram} title="Instagram">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5"/>
-                <circle cx="12" cy="12" r="4.15"/>
-                <circle cx="17.5" cy="6.6" r="1.05" fill="currentColor" stroke="none"/>
-              </svg>
-            </a>
-            <a href="https://maps.app.goo.gl/nPuzAu9Ph8iGiARQ7"
-              target="_blank" rel="noopener noreferrer" aria-label={menu.maps} title={menu.mapsTitle}>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19.3 9.6c0 5.1-7.3 11.9-7.3 11.9S4.7 14.7 4.7 9.6a7.3 7.3 0 0 1 14.6 0Z"/>
-                <circle cx="12" cy="9.6" r="2.6"/>
-              </svg>
-            </a>
-            <button type="button" aria-label={menu.openNavigation} title={menu.openNavigation}
-              aria-haspopup="dialog" aria-controls="site-navigation" onClick={() => dialog.current?.showModal()}>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 5.5h18M3 12h18M3 18.5h18"/>
-              </svg>
-            </button>
-          </nav>
-        </div>
-      </header>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <Landing menu={menu} onNavVisibility={setNavVisible}/>
+      <section id="flavour-menu" className="menu" aria-label={menu.mainLabel} tabIndex={-1}
+        ref={menuRef} style={style} {...surfaceProps}>
+        <section className="visual" aria-label={menu.bowl(current.name)}>
+          {frames.map(i => <div key={flavours[i].id} className={`scene ${layerState(i)}`}
+            aria-hidden={i !== index} style={{ backgroundColor: colours[flavours[i].id] }}>
+            <div className="plate-stage">
+              <div className="drag-surface">
+                <img className="bowl" src={bowlSource(flavours[i])} width="1254" height="1254"
+                  alt={menu.bowlAlt(flavours[i].name)}
+                  draggable="false" onError={event => {
+                    if (event.currentTarget.getAttribute('src') !== flavours[i].image) event.currentTarget.src = flavours[i].image
+                  }} />
+              </div>
+            </div>
+          </div>)}
+        </section>
 
-      <section className="visual" aria-label={menu.bowl(current.name)}>
-        {frames.map(i => <div key={flavours[i].id} className={`scene ${layerState(i)}`}
-          aria-hidden={i !== index} style={{ backgroundColor: colours[flavours[i].id] }}>
-          <div className="plate-stage">
-            <div className="drag-surface">
-              <img className="bowl" src={bowlSource(flavours[i])} width="1254" height="1254"
-                alt={menu.bowlAlt(flavours[i].name)}
-                draggable="false" onError={event => {
-                  if (event.currentTarget.getAttribute('src') !== flavours[i].image) event.currentTarget.src = flavours[i].image
-                }} />
+        <section className="details" aria-label={menu.selected}>
+          <div className="tasting-note">
+            <div className="menu-label"><span>{menu.menuLabel}</span><Counter index={index} menu={menu}/></div>
+            <div className="copy-stack">
+              {flavours.map((flavour, i) => <article
+                className={`flavour-copy ${(i === index || i === previousIndex) ? layerState(i) : 'standby'}`}
+                key={flavour.id} aria-hidden={i !== index} inert={i !== index}>
+                <h2>{flavour.name}</h2>
+                <p>{flavour.description}</p>
+                {flavour.price != null && flavour.price !== '' && <p className="price">{flavour.price}</p>}
+              </article>)}
             </div>
           </div>
-        </div>)}
+        </section>
+        <Selector menu={menu} index={index} select={select}/>
+        <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">{current.name}, {menu.position(index + 1, flavours.length)}</span>
       </section>
-
-      <section className="details" aria-label={menu.selected}>
-        <div className="tasting-note">
-          <div className="menu-label"><span>{menu.menuLabel}</span><Counter index={index} menu={menu}/></div>
-          <div className="copy-stack">
-            {flavours.map((flavour, i) => <article
-              className={`flavour-copy ${(i === index || i === previousIndex) ? layerState(i) : 'standby'}`}
-              key={flavour.id} aria-hidden={i !== index} inert={i !== index}>
-              <h1>{flavour.name}</h1>
-              <p>{flavour.description}</p>
-              {flavour.price != null && flavour.price !== '' && <p className="price">{flavour.price}</p>}
-            </article>)}
-          </div>
-        </div>
-      </section>
-      <Selector menu={menu} index={index} select={select}/>
-      <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">{current.name}, {menu.position(index + 1, flavours.length)}</span>
     </main>
     <dialog id="site-navigation" ref={dialog} className="site-navigation" aria-label={menu.navigation}
       onClick={event => { if (event.target === event.currentTarget) event.currentTarget.close() }}>
-      <form method="dialog">
+      <form method="dialog" onSubmit={event => {
+        event.preventDefault()
+        dialog.current?.close()
+        menuRef.current?.focus({ preventScroll: true })
+        menuRef.current?.scrollIntoView({ block: 'start' })
+      }}>
         <button type="submit" autoFocus>{menu.menuPage}</button>
         <button type="button" disabled>{menu.aboutPage}</button>
       </form>

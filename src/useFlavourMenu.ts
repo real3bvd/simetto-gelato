@@ -80,6 +80,7 @@ function handlesOwnInput(target: EventTarget | null) {
 }
 
 export function useFlavourMenu(flavours: readonly Bowl[]) {
+  const menuRef = useRef<HTMLElement>(null)
   const [frame, setFrame] = useState(openingFrame)
   const current = useRef(openingFrame)
   const desiredIndex = useRef(0)
@@ -170,10 +171,20 @@ export function useFlavourMenu(flavours: readonly Bowl[]) {
   }, [])
 
   useEffect(() => {
+    function visibleMenuBounds() {
+      const bounds = menuRef.current?.getBoundingClientRect()
+      if (!bounds || bounds.bottom <= 0 || bounds.top >= window.innerHeight) return null
+      // A short menu can be fully visible beneath the header; a taller one
+      // reaches the top of the viewport before its last row becomes visible.
+      return bounds.top <= 2 || bounds.bottom <= window.innerHeight + 2 ? bounds : null
+    }
+
     const onKey = (event: KeyboardEvent) => {
       if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || handlesOwnInput(event.target)) return
-      const scrollable = document.documentElement.scrollHeight > window.innerHeight + 2
-      if ((event.key === 'ArrowUp' || event.key === 'ArrowDown') && scrollable) return
+      const bounds = visibleMenuBounds()
+      if (!bounds) return
+      if (event.key === 'ArrowUp' && window.scrollY > 2) return
+      if (event.key === 'ArrowDown' && bounds.bottom > window.innerHeight + 2) return
       switch (event.key) {
         case 'ArrowRight':
         case 'ArrowDown': next(); break
@@ -192,9 +203,6 @@ export function useFlavourMenu(flavours: readonly Bowl[]) {
     const onWheel = (event: WheelEvent) => {
       if (event.defaultPrevented || event.ctrlKey || event.altKey || event.metaKey || handlesOwnInput(event.target)) return
       if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
-      const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY)
-      if ((horizontal || event.shiftKey) && event.target instanceof Element && event.target.closest('.selector')) return
-      if (!horizontal && document.documentElement.scrollHeight > window.innerHeight + 2) return
       const now = performance.now()
       if (now - lastWheel > 180) {
         distance = 0
@@ -202,6 +210,21 @@ export function useFlavourMenu(flavours: readonly Bowl[]) {
       }
       lastWheel = now
       if (consumed) return
+      const bounds = visibleMenuBounds()
+      const target = event.target
+      const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+      // The gesture that scrolls the page into the menu (including its inertia)
+      // belongs to the page. Start browsing with the next distinct gesture.
+      if (!bounds || !(target instanceof Element) || !menuRef.current?.contains(target)) {
+        consumed = true
+        return
+      }
+      const scrollsStrip = (horizontal || event.shiftKey) && target.closest('.selector')
+      const scrollsPage = !horizontal && (bounds.bottom > window.innerHeight + 2 || (event.deltaY < 0 && window.scrollY > 2))
+      if (scrollsStrip || scrollsPage) {
+        consumed = true
+        return
+      }
       const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1
       distance += (horizontal ? event.deltaX : event.deltaY) * unit
       if (Math.abs(distance) < 36) return
@@ -295,7 +318,7 @@ export function useFlavourMenu(flavours: readonly Bowl[]) {
   }
 
   return {
-    ...frame, select,
+    ...frame, select, menuRef,
     surfaceProps: {
       onTouchStart, onTouchMove, onTouchEnd, onClickCapture, onTouchCancel: resetTouch,
     },
